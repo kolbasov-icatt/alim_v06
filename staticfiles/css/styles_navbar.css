@@ -1,0 +1,59 @@
+/* General header styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff; /* White background */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Light shadow for depth */
+}
+
+/* Logo and branding styles */
+.logo a.navbar-brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333; /* Dark grey text */
+}
+
+.logo img.menu-flag {
+    margin-right: 10px;
+}
+
+/* Country info styles */
+.country_info {
+    display: flex;
+    align-items: center;
+    margin-left: 20px; /* Space between logo and country info */
+}
+
+.country_info img.menu-flag {
+    margin-right: 10px;
+}
+
+.country_info .country-name {
+    font-size: 20px;
+    color: #333;
+    margin: 0; /* Remove default margins */
+}
+
+/* Menu styles */
+.menu {
+    display: flex;
+    align-items: center;
+}
+
+.menu-item {
+    margin-left: 20px; /* Space between menu items */
+}
+
+.menu-item a {
+    text-decoration: none;
+    color: #555; /* Medium grey text */
+    font-weight: bold;
+    transition: color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.menu-item a:hover {
+    color: #007BFF; /* Change color on hover */
+}

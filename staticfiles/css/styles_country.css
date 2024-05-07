@@ -1,0 +1,265 @@
+:root {
+    --distributions_color: rgba(191, 216, 229, 0.2);
+}
+
+html, body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 150px auto;
+    grid-template-rows: 60px auto;
+    grid-template-areas: 
+    "header header"
+    "side main";
+}
+a {
+    text-decoration: none; /* This will remove underlines from all links */
+    color: #fff;
+}
+.header {
+    background-color: rgba(233, 237, 240, 1);
+    grid-area: header;
+    display: grid;
+    grid-template-columns: 150px 1fr 1fr;
+    grid-template-areas: "logo country_info menu "
+}
+.logo{
+    grid-area: logo;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.country_info{
+    grid-area: country_info;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.menu{
+    margin: 0;
+    padding: 0;
+    grid-area: menu;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+.menu-item a {
+    display: block; /* Makes the link fill the container */
+    text-decoration: none; /* Removes underline from links */
+    color: black; /* Default text color */
+    font-weight: normal; /* Default font weight */
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    transition: color 0.3s, font-weight 0.3s; /* Smooth transition for color and font-weight */
+}
+.menu-item a:hover {
+    color: green; /* Color changes on hover */
+    font-weight: bold; /* Text becomes bold on hover */
+}
+.menu-flag{
+    padding-bottom: 30px;
+}
+.country-name{
+    padding-bottom: 20px;
+    padding-left: 20px;
+}
+.sidebar {
+    background-color: #3F5661;
+    grid-area: side;
+    padding: 20px;
+}
+.sidebar-item {
+    color: #fff;
+    margin-bottom: 10px; /* Space between items */
+    text-align: center; /* Center-align the content of each sidebar-item */
+}
+.stylish-button {
+    color: white; /* White text */
+    padding: 1px 1px 1px 1px;
+    width: 110px;
+    font-size: 18px; /* Text size */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transition for background and transform */
+}
+.stylish-button:hover {
+    transform: scale(1.1); /* Slightly increase the size */
+}
+
+
+.main {
+    background-color: #fff;
+    padding: 15px;
+    grid-area: main;
+
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    grid-template-rows: 3vh 17vh 17vh 17vh 17vh 17vh;
+    grid-template-areas: 
+        "title1 title2"
+        "styles product1"
+        "styles product2"
+        "styles product3"
+        "reserve product4"
+        "reserve product5";
+    /* gap: 5px; */
+}
+
+.card_title1{
+    background-color: #fff;
+    border-radius: 10px 10px 0px 0px;
+    grid-area: title1;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.card_title2{
+    background-color: #B7C6CF;
+    border-radius: 10px 10px 0px 0px;
+    grid-area: title2;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.card_styles{
+    margin-right: 2px;
+    background-color: #fff;
+    /* border-radius: 0px 0px 10px 10px; */
+    grid-area: styles;
+}
+
+.card_reserve{
+    background-color: #fff;
+    border-radius: 0px 0px 10px 10px;
+    grid-area: reserve;
+
+    display: grid;
+    grid-template-rows: 2vh 16vh 16vh;
+    grid-template-areas:
+        "distributions_title"
+        "distributions_charts1"
+        "distributions_charts2";
+}
+.distributions_title{
+    margin-right: 2px;
+    background-color: var(--distributions_color);
+    border-radius: 10px 10px 0px 0px;
+    grid-area: distributions_title;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.distributions_charts1{
+    margin-right: 2px;
+    grid-area: distributions_charts1;
+    background-color: var(--distributions_color);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.distributions_charts2{
+    margin-right: 2px;
+    grid-area: distributions_charts2;
+    background-color: var(--distributions_color);
+    border-radius: 0px 0px 10px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.card_product1{
+    background-color: rgba(233, 237, 240, 0.5);
+    grid-area: product1;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 4vh 13vh;
+    grid-template-areas:
+        "name doughnut1 doughnut2"
+        "image doughnut1 doughnut2";
+}
+
+.card_product2{
+    background-color: rgba(191, 216, 229, 0.5);
+    /* border-radius: 10px; */
+    grid-area: product2;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 4vh 13vh;
+    grid-template-areas:
+        "name doughnut1 doughnut2"
+        "image doughnut1 doughnut2";
+}
+.card_product3{
+    background-color:  rgba(233, 237, 240, 0.5);
+    grid-area: product3;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 4vh 13vh;
+    grid-template-areas:
+        "name doughnut1 doughnut2"
+        "image doughnut1 doughnut2";
+}
+.card_product4{
+    background-color: rgba(191, 216, 229, 0.5);
+    grid-area: product4;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 4vh 13vh;
+    grid-template-areas:
+        "name doughnut1 doughnut2"
+        "image doughnut1 doughnut2";
+}
+.card_product5{
+    background-color:  rgba(233, 237, 240, 0.5);
+    border-radius: 0px 0px 10px 10px;
+    grid-area: product5;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 4vh 13vh;
+    grid-template-areas:
+        "name doughnut1 doughnut2"
+        "image doughnut1 doughnut2";
+}
+
+.prod_img{
+    grid-area: image;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.prod{
+    grid-area: name;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.doughnut1{
+    grid-area: doughnut1;
+}
+.doughnut2{
+    grid-area: doughnut2;
+}
+.product_image{
+    border-radius: 10px;
+}
+.link {
+    display: block; /* Makes the link fill the container */
+    text-decoration: none; /* Removes underline from links */
+    color: black; /* Default text color */
+    font-weight: normal; /* Default font weight */
+
+    transition: color 0.3s, font-weight 0.3s; /* Smooth transition for color and font-weight */
+}
+.link:hover {
+    color: green; /* Color changes on hover */
+    font-weight: bold; /* Text becomes bold on hover */
+}

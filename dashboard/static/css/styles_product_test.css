@@ -1,0 +1,131 @@
+:root {
+    --subtitle_color: rgba(191, 216, 229, 0.2);
+    --row_color1: #fff;
+    --row_color2: rgba(191, 216, 229, 0.5);
+}
+
+html, body {
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 150px auto;
+    grid-template-rows: 60px auto;
+    grid-template-areas: 
+    "header header"
+    "side main";
+}
+
+/* SIDEBAR */
+.sidebar{
+    background-color: #3F5661;
+    grid-area: side;
+}
+
+.main {
+    background-color: #fff;
+
+    padding: 15px;
+    grid-area: main;
+
+    display: grid;
+    grid-template-columns: 30% 35% 35%;
+    grid-template-rows: 3vh 26vh 20vh 20vh 20vh;
+    grid-template-areas: 
+        "title1 title2 title3"
+        "card11 card12 card13"
+        "card21 card22 card23"
+        "card31 card32 card33"
+        "card41 card42 card43";
+    gap: 0px 20px; /* No gap between rows, 20px gap between columns */
+}
+.card_title1{
+    background-color: var(--subtitle_color);
+    border-radius: 10px 10px 0px 0px;
+    grid-area: title1;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.card_title2{
+    background-color: var(--subtitle_color);
+    border-radius: 10px 10px 0px 0px;
+    grid-area: title2;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.card_title3{
+    background-color: var(--subtitle_color);
+    border-radius: 10px 10px 0px 0px;
+    grid-area: title3;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.card11{
+    grid-area: card11;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.card11 img {
+    max-height: 100%;
+    width: auto;
+    display: block; /* To remove any extra space below the image */
+}
+
+.freq-all {
+    grid-area: card12;
+    /* display: grid;
+    grid-template-columns: 17.5% 17.5%; */
+    justify-items: center; 
+    align-items: center; 
+}
+
+.cam-all {
+    grid-area: cam-card13;
+    /* display: grid;
+    grid-template-columns: 17.5% 17.5%; */
+    justify-items: center; 
+    align-items: center; 
+}
+.card21{
+    grid-area: card21;
+    background-color: var(--row_color2);
+}
+.card22{
+    grid-area: card22;
+    background-color: var(--row_color2);
+}
+.card23{
+    grid-area: card23;
+    background-color: var(--row_color2);
+}
+.card31{
+    grid-area: card31;
+    
+}
+.card32{
+    grid-area: card32;
+}
+.card33{
+    grid-area: card33;
+    
+}
+.card41{
+    grid-area: card41;
+    background-color: var(--row_color2);
+}
+.card42{
+    grid-area: card42;
+    background-color: var(--row_color2);
+}
+.card43{
+    grid-area: card43;
+    background-color: var(--row_color2);
+}

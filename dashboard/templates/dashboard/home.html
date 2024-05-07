@@ -1,0 +1,32 @@
+{% extends "dashboard/base.html" %}
+{% block content %}
+<h1>Welcome to Our Food World</h1>
+
+<section>
+    <h2><a href="{% url 'dashboard:foodstyles' %}">Food Styles</a></h2>
+    <ul>
+        {% for style in foodstyles %}
+        <li>{{ style.title }}</li>
+        {% endfor %}
+    </ul>
+</section>
+
+<section>
+    <h2>Foods</h2>
+    <ul>
+        {% for food in foods %}
+        <li>{{ food.title }}</li>
+        {% endfor %}
+    </ul>
+</section>
+
+<section>
+    <h2>Countries</h2>
+    <ul>
+        {% for country in countries %}
+        <li><a href="{% url 'dashboard:country_detail' country.id %}">{{ country.title }}</a></li>
+        {% endfor %}
+    </ul>
+</section>
+
+{% endblock %}

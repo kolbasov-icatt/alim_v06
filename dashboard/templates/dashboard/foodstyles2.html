@@ -1,0 +1,66 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Food Styles{% endblock %}
+
+{% block styles %}
+<style>
+    #foodStyleChart {
+        max-width: 400px; /* Adjust the width as needed for better visibility */
+        height: auto; /* Adjust the height as needed */
+        margin: auto; /* Centers the chart */
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Your existing content -->
+<ul>
+    {% for style in foodstyles %}
+    <li>{{ style.title }}</li>
+    {% endfor %}
+</ul>
+
+<!-- Add a canvas element for the chart -->
+<canvas id="foodStyleChart"></canvas>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+var ctx = document.getElementById('foodStyleChart').getContext('2d');
+var foodStyleChart = new Chart(ctx, {
+    type: 'bar', // Keep as 'bar'
+    data: {
+        labels: {{ labels|safe }},
+        datasets: [{
+            label: 'Percentage of Food Styles',
+            data: {{ data_values|safe }},
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        indexAxis: 'y', // This makes the chart horizontal
+        scales: {
+            x: {
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value, index, values) {
+                        return value.toFixed(2) + '%'; // Format the ticks as percentages
+                    }
+                }
+            }
+        },
+        tooltips: {
+            callbacks: {
+                label: function(tooltipItem, chart) {
+                    var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                    return datasetLabel + ': ' + tooltipItem.xLabel.toFixed(2) + '%'; // Updated for horizontal bar chart
+                }
+            }
+        }
+    }
+});
+</script>
+{% endblock %}

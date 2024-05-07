@@ -1,0 +1,255 @@
+:root {
+    --subtitle_color: rgba(191, 216, 229, 0.2);
+    --row_color1: #fff;
+    --row_color2: rgba(191, 216, 229, 0.5);
+}
+
+html, body {
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 150px auto;
+    grid-template-rows: 60px auto;
+    grid-template-areas: 
+    "header header"
+    "side main";
+}
+
+/* HEADER */
+.header {
+    background-color: rgba(233, 237, 240, 1);
+    grid-area: header;
+    display: grid;
+    grid-template-columns: 150px 1fr 1fr;
+    grid-template-areas: "logo country_info menu "
+}
+.logo{
+    grid-area: logo;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.country_info{
+    grid-area: country_info;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.menu{
+    margin: 0;
+    padding: 0;
+    grid-area: menu;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+.menu-item a {
+    display: block; /* Makes the link fill the container */
+    text-decoration: none; /* Removes underline from links */
+    color: black; /* Default text color */
+    font-weight: normal; /* Default font weight */
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    transition: color 0.3s, font-weight 0.3s; /* Smooth transition for color and font-weight */
+}
+.menu-item a:hover {
+    color: green; /* Color changes on hover */
+    font-weight: bold; /* Text becomes bold on hover */
+}
+.menu-flag{
+    padding-bottom: 30px;
+}
+.country-name{
+    padding-bottom: 20px;
+    padding-left: 20px;
+}
+
+/* SIDEBAR */
+.sidebar{
+    background-color: #3F5661;
+    grid-area: side;
+}
+
+/* MAIN */
+.main {
+    background-color: #fff;
+
+    padding: 15px;
+    grid-area: main;
+
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 3vh 15vh 10vh 10vh 10vh 10vh 10vh 10vh 10vh;
+    grid-template-areas: 
+        "title1 title2"
+        "freq-all cam-all"
+        "freq-country cam-country"
+        "freq-italia cam-italia"
+        "freq-styles cam-styles"
+        "freq-styles2 cam-styles2"
+        "freq-gender cam-gender"
+        "freq-generation cam-generation"
+        "freq-resp cam-resp";
+    gap: 0px 20px; /* No gap between rows, 20px gap between columns */
+
+}
+.card_title1{
+    background-color: var(--subtitle_color);
+    border-radius: 10px 10px 0px 0px;
+    grid-area: title1;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.card_title2{
+    background-color: var(--subtitle_color);
+    border-radius: 10px 10px 0px 0px;
+    grid-area: title2;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+/* ROWS */
+.freq-all {
+    grid-area: freq-all;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center; 
+    align-items: center; 
+}
+
+.cam-all {
+    grid-area: cam-all;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center; 
+    align-items: center; 
+}
+
+.freq-country {
+    grid-area: freq-country;
+    background-color: var(--row_color2);
+    display: grid;
+    grid-template-columns: 0.5fr 0.5fr 0.5fr 0.5fr;
+    justify-items: center; 
+    align-items: center; 
+}
+
+.cam-country {
+    grid-area: cam-country;
+    background-color: var(--row_color2);
+    display: grid;
+    grid-template-columns: 0.5fr 0.5fr 0.5fr 0.5fr;
+    justify-items: center; 
+    align-items: center; 
+}
+
+.freq-italia {
+    grid-area: freq-italia;
+    display: grid;
+    grid-template-columns: 0.5fr 0.5fr 0.5fr 0.5fr;
+    justify-items: center; 
+    align-items: center; 
+}
+
+.cam-italia {
+    grid-area: cam-italia;
+    display: grid;
+    grid-template-columns: 0.5fr 0.5fr 0.5fr 0.5fr;
+    justify-items: center; 
+    align-items: center; 
+}
+
+.freq-styles {
+    grid-area: freq-styles;
+    background-color: var(--row_color2);
+    display: grid;
+    grid-template-columns: 0.5fr 0.5fr 0.5fr 0.5fr;
+    justify-items: center; 
+    align-items: center; 
+    
+}
+.cam-styles {
+    grid-area: cam-styles;
+    background-color: var(--row_color2);
+    display: grid;
+    grid-template-columns: 0.5fr 0.5fr 0.5fr 0.5fr;
+    justify-items: center; 
+    align-items: center; 
+}
+.freq-styles2 {
+    grid-area: freq-styles2;
+    background-color: var(--row_color2);
+    display: grid;
+    grid-template-columns: 0.5fr 0.5fr 0.5fr 0.5fr;
+    justify-items: center; 
+    align-items: center; 
+    
+}
+.cam-styles2 {
+    grid-area: cam-styles2;
+    background-color: var(--row_color2);
+    display: grid;
+    grid-template-columns: 0.5fr 0.5fr 0.5fr 0.5fr;
+    justify-items: center; 
+    align-items: center; 
+}
+
+.freq-gender {
+    grid-area: freq-gender;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center; 
+    align-items: center; 
+}
+
+.cam-gender {
+    grid-area: cam-gender;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center; 
+    align-items: center; 
+}
+
+.freq-generation {
+    grid-area: freq-generation;
+    background-color: var(--row_color2);
+    display: grid;
+    grid-template-columns: 0.5fr 0.5fr 0.5fr 0.5fr;
+    justify-items: center; 
+    align-items: center; 
+}
+
+.cam-generation {
+    grid-area: cam-generation;
+    background-color: var(--row_color2);
+    display: grid;
+    grid-template-columns: 0.5fr 0.5fr 0.5fr 0.5fr;
+    justify-items: center; 
+    align-items: center; 
+}
+
+.freq-resp {
+    grid-area: freq-resp;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center; 
+    align-items: center; 
+}
+
+.cam-resp {
+    grid-area: cam-resp;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center; 
+    align-items: center; 
+}
+
+
+

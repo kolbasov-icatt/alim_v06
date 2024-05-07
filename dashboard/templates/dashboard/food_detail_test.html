@@ -1,0 +1,575 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{% block title %}{{ food }}{% endblock %}</title>
+  <!-- Favicon-->
+  <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %} " />
+  <!-- Font Awesome icons (free version)-->
+  <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+  <!-- Google fonts-->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+  <link href="{% static 'css/styles_product.css' %}" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- NAVBAR -->
+  {% include 'dashboard/_navbar.html' %}
+
+  <section class="sidebar">
+
+  </section>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="card_title1"><h2>Frequenza {{sudeisole_label}}</h2></div>
+    <div class="card_title2"><h2>Cambiamento</h2></div>
+    <div class="freq-all">       
+        <canvas id="FreqChart"></canvas>    
+        <canvas id="FreqGaugeChart"></canvas>
+    </div>    
+    <div class="cam-all">        
+        <canvas id="CamChart"></canvas>
+        <canvas id="CamGaugeChart"></canvas>
+    </div>
+
+    <!-- COUNTRIES -->
+    <div class="freq-country">        
+        <canvas id="ItaliaFreqGaugeChart"></canvas>
+        <canvas id="USAFreqGaugeChart"></canvas>
+        <canvas id="FranciaFreqGaugeChart"></canvas>
+        <canvas id="GermaniaFreqGaugeChart"></canvas>
+    </div>
+    <div class="cam-country">
+        <canvas id="ItaliaCamGaugeChart"></canvas>
+        <canvas id="USACamGaugeChart"></canvas>
+        <canvas id="FranciaCamGaugeChart"></canvas>
+        <canvas id="GermaniaCamGaugeChart"></canvas>
+    </div>
+    <!-- ITALIA -->
+    <div class="freq-italia">
+        <canvas id="SudFreqGaugeChart"></canvas>
+        <canvas id="NordOvestFreqGaugeChart"></canvas>
+        <canvas id="CentroFreqGaugeChart"></canvas>
+        <canvas id="NordEstFreqGaugeChart"></canvas>
+    </div>
+    <div class="cam-italia">
+        <canvas id="SudCamGaugeChart"></canvas>
+        <canvas id="NordOvestCamGaugeChart"></canvas>
+        <canvas id="CentroCamGaugeChart"></canvas>
+        <canvas id="NordEstCamGaugeChart"></canvas>
+    </div>
+    <!-- FOOD STYLES -->
+    <div class="freq-styles">
+        {% for style in foodstyles|slice:":4" %}
+            {% if style|slugify != "nessuno-di-questi" %}
+            <canvas id="{{ style|slugify }}FreqGaugeChart"></canvas>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="cam-styles">
+        {% for style in foodstyles|slice:":4" %}
+            {% if style|slugify != "nessuno-di-questi" %}
+            <canvas id="{{ style|slugify }}CamGaugeChart"></canvas>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="freq-styles2">
+        <canvas id="esterofiliFreqGaugeChart"></canvas>
+        <canvas id="edonistiFreqGaugeChart"></canvas>
+        <canvas id="essenzialistiFreqGaugeChart"></canvas>
+        <canvas id="nessunodiquestiFreqGaugeChart"></canvas>
+    </div>
+    <div class="cam-styles2">
+        <canvas id="esterofiliCamGaugeChart"></canvas>
+        <canvas id="edonistiCamGaugeChart"></canvas>
+        <canvas id="essenzialistiCamGaugeChart"></canvas>
+        <canvas id="nessunodiquestiCamGaugeChart"></canvas>
+    </div>
+    <!-- GENDER -->
+    <div class="freq-gender">
+        <canvas id="femminaFreqGaugeChart"></canvas>
+        <canvas id="maschioFreqGaugeChart"></canvas>
+    </div>
+    <div class="cam-gender">
+        <canvas id="femminaCamGaugeChart"></canvas>
+        <canvas id="maschioCamGaugeChart"></canvas>
+    </div>
+    <!-- GENERATION -->
+    <div class="freq-generation">
+        <canvas id="genxFreqGaugeChart"></canvas>
+        <canvas id="genyFreqGaugeChart"></canvas>
+        <canvas id="genzFreqGaugeChart"></canvas>
+        <canvas id="boomerFreqGaugeChart"></canvas>
+    </div>
+    </div>
+    <div class="cam-generation">
+        <canvas id="genxCamGaugeChart"></canvas>
+        <canvas id="genyCamGaugeChart"></canvas>
+        <canvas id="genzCamGaugeChart"></canvas>
+        <canvas id="boomerCamGaugeChart"></canvas>
+    </div>
+    <!-- RESPONSABILI ACQUISTI -->
+    <div class="freq-resp">
+        <canvas id="lintervistatoFreqGaugeChart"></canvas>
+        <canvas id="altriFreqGaugeChart"></canvas>
+    </div>
+    <div class="cam-resp">
+        <canvas id="lintervistatoCamGaugeChart"></canvas>
+        <canvas id="altriCamGaugeChart"></canvas>
+    </div>
+  </main>
+
+  <script>
+    var chartConfigs = {
+        freqChart: {
+            labels: {{ freq_labels|safe }},
+            data: {{ freq_percentages|safe }},
+            backgroundColor: '{{ food.color }}',
+            borderColor: '{{ food.border_color }}',
+        },
+        camChart: {
+            labels: {{ growth_labels|safe }},
+            data: {{ growth_percentages|safe }},
+            backgroundColor: '{{ food.color }}',
+            borderColor: '{{ food.border_color }}',
+        },
+    };
+
+    var chartConfigsGauge = {
+            freqChart: {
+                labels: ['{{food}}', ''],
+                data: [{{ freq_av }}, 20 - {{ freq_av }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: 'Total',
+                centerText: {{ freq_av|floatformat:1 }}, 
+            },
+            camChart: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_av}} + 100) / 2, 100 - (({{growth_av}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: 'Total',
+                centerText: '{{ growth_av|floatformat:0 }}%', 
+            },
+            // ITALIA
+            freqChartItalia: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_italia|default_if_none:"0" }}, 20 - {{ freq_italia|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_italia}}',
+                centerText: {{ freq_italia|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartItalia: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_italia}} + 100) / 2, 100 - (({{growth_italia}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_italia}}',
+                centerText: '{{ growth_italia|floatformat:0 }}%', 
+            },
+            // USA
+            freqChartUSA: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_usa|default_if_none:"0" }}, 20 - {{ freq_usa|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_usa}}',
+                centerText: {{ freq_usa|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartUSA: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_usa}} + 100) / 2, 100 - (({{growth_usa}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_usa}}',
+                centerText: '{{ growth_usa|floatformat:0 }}%', 
+            },
+            // Francia
+            freqChartFrancia: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_francia|default_if_none:"0" }}, 20 - {{ freq_francia|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_francia}}',
+                centerText: {{ freq_francia|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartFrancia: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_francia}} + 100) / 2, 100 - (({{growth_francia}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_francia}}',
+                centerText: '{{ growth_francia|floatformat:0 }}%', 
+            },
+            // GERMANIA 
+            freqChartGermania: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_germania|default_if_none:"0" }}, 20 - {{ freq_germania|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_germania}}',
+                centerText: {{ freq_germania|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartGermania: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_germania}} + 100) / 2, 100 - (({{growth_germania}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_germania}}',
+                centerText: '{{ growth_germania|floatformat:0 }}%', 
+            },
+            // SUD 
+            freqChartSud: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_sudeisole|default_if_none:"0" }}, 20 - {{ freq_sudeisole|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_sudeisole}}',
+                centerText: {{ freq_sudeisole|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartSud: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_sudeisole}} + 100) / 2, 100 - (({{growth_sudeisole}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_sudeisole}}',
+                centerText: '{{ growth_sudeisole|floatformat:0 }}%', 
+            },
+            // NORD OVEST 
+            freqChartNordOvest: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_nordovest|default_if_none:"0" }}, 20 - {{ freq_nordovest|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_nordovest}}',
+                centerText: {{ freq_nordovest|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartNordOvest: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_nordovest}} + 100) / 2, 100 - (({{growth_nordovest}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_nordovest}}',
+                centerText: '{{ growth_nordovest|floatformat:0 }}%', 
+            },
+            // CENTRO 
+            freqChartCentro: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_centro|default_if_none:"0" }}, 20 - {{ freq_centro|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_centro}}',
+                centerText: {{ freq_centro|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartCentro: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_centro}} + 100) / 2, 100 - (({{growth_centro}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_centro}}',
+                centerText: '{{ growth_centro|floatformat:0 }}%', 
+            },
+            // NORD EST 
+            freqChartNordEst: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_nordest|default_if_none:"0" }}, 20 - {{ freq_nordest|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_nordest}}',
+                centerText: {{ freq_nordest|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartNordEst: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_nordest}} + 100) / 2, 100 - (({{growth_nordest}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_nordest}}',
+                centerText: '{{ growth_nordest|floatformat:0 }}%', 
+            },
+            // TERRITORIONALISTI 
+            freqChartterritorialisti: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_territorialisti|default_if_none:"0" }}, 20 - {{ freq_territorialisti|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_territorialisti}}',
+                centerText: {{ freq_territorialisti|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartterritorialisti: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_territorialisti}} + 100) / 2, 100 - (({{growth_territorialisti}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_territorialisti}}',
+                centerText: '{{ growth_territorialisti|floatformat:0 }}%', 
+            },
+            // RISTO 
+            freqChartristoriani: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_ristoriani|default_if_none:"0" }}, 20 - {{ freq_ristoriani|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_ristoriani}}',
+                centerText: {{ freq_ristoriani|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartristoriani: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_ristoriani}} + 100) / 2, 100 - (({{growth_ristoriani}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_ristoriani}}',
+                centerText: '{{ growth_ristoriani|floatformat:0 }}%', 
+            },
+            // salutisti 
+            freqChartsalutisti: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_salutisti|default_if_none:"0" }}, 20 - {{ freq_salutisti|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_salutisti}}',
+                centerText: {{ freq_salutisti|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartsalutisti: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_salutisti}} + 100) / 2, 100 - (({{growth_salutisti}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_salutisti}}',
+                centerText: '{{ growth_salutisti|floatformat:0 }}%', 
+            },
+            // industriariani 
+            freqChartindustriariani: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_industriariani|default_if_none:"0" }}, 20 - {{ freq_industriariani|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_industriariani}}',
+                centerText: {{ freq_industriariani|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartindustriariani: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_industriariani}} + 100) / 2, 100 - (({{growth_industriariani}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_industriariani}}',
+                centerText: '{{ growth_industriariani|floatformat:0 }}%', 
+            },
+            // nessuno di questi 
+            freqChartnessunodiquesti: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_nessunodiquesti|default_if_none:"0" }}, 20 - {{ freq_nessunodiquesti|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_nessunodiquesti}}',
+                centerText: {{ freq_nessunodiquesti|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartnessunodiquesti: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_nessunodiquesti}} + 100) / 2, 100 - (({{growth_nessunodiquesti}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_nessunodiquesti}}',
+                centerText: '{{ growth_nessunodiquesti|floatformat:0 }}%', 
+            },
+            // Esterofili 
+            freqChartesterofili: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_esterofili|default_if_none:"0" }}, 20 - {{ freq_esterofili|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_esterofili}}',
+                centerText: {{ freq_esterofili|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartesterofili: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_esterofili}} + 100) / 2, 100 - (({{growth_esterofili}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_esterofili}}',
+                centerText: '{{ growth_esterofili|floatformat:0 }}%', 
+            },
+            // Edonisti 
+            freqChartedonisti: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_edonisti|default_if_none:"0" }}, 20 - {{ freq_edonisti|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_edonisti}}',
+                centerText: {{ freq_edonisti|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartedonisti: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_edonisti}} + 100) / 2, 100 - (({{growth_edonisti}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_edonisti}}',
+                centerText: '{{ growth_edonisti|floatformat:0 }}%', 
+            },
+            // essenzialisti 
+            freqChartessenzialisti: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_essenzialisti|default_if_none:"0" }}, 20 - {{ freq_essenzialisti|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_essenzialisti}}',
+                centerText: {{ freq_essenzialisti|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartessenzialisti: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_essenzialisti}} + 100) / 2, 100 - (({{growth_essenzialisti}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_essenzialisti}}',
+                centerText: '{{ growth_essenzialisti|floatformat:0 }}%', 
+            },
+            // femmina 
+            freqChartfemmina: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_femmina|default_if_none:"0" }}, 20 - {{ freq_femmina|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_femmina}}',
+                centerText: {{ freq_femmina|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartfemmina: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_femmina}} + 100) / 2, 100 - (({{growth_femmina}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_femmina}}',
+                centerText: '{{ growth_femmina|floatformat:0 }}%', 
+            },
+            // maschio 
+            freqChartmaschio: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_maschio|default_if_none:"0" }}, 20 - {{ freq_maschio|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_maschio}}',
+                centerText: {{ freq_maschio|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartmaschio: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_maschio}} + 100) / 2, 100 - (({{growth_maschio}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_maschio}}',
+                centerText: '{{ growth_maschio|floatformat:0 }}%', 
+            },
+            // genx 
+            freqChartgenx: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_genx|default_if_none:"0" }}, 20 - {{ freq_genx|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_genx}}',
+                centerText: {{ freq_genx|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartgenx: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_genx}} + 100) / 2, 100 - (({{growth_genx}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_genx}}',
+                centerText: '{{ growth_genx|floatformat:0 }}%', 
+            },
+            // gen y 
+            freqChartgeny: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_geny|default_if_none:"0" }}, 20 - {{ freq_geny|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_geny}}',
+                centerText: {{ freq_geny|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartgeny: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_geny}} + 100) / 2, 100 - (({{growth_geny}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_geny}}',
+                centerText: '{{ growth_geny|floatformat:0 }}%', 
+            },
+            // genz 
+            freqChartgenz: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_genz|default_if_none:"0" }}, 20 - {{ freq_genz|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_genz}}',
+                centerText: {{ freq_genz|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartgenz: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_genz}} + 100) / 2, 100 - (({{growth_genz}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_genz}}',
+                centerText: '{{ growth_genz|floatformat:0 }}%', 
+            },
+            // boomer 
+            freqChartboomer: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_boomer|default_if_none:"0" }}, 20 - {{ freq_boomer|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_boomer}}',
+                centerText: {{ freq_boomer|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartboomer: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_boomer}} + 100) / 2, 100 - (({{growth_boomer}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_boomer}}',
+                centerText: '{{ growth_boomer|floatformat:0 }}%', 
+            },
+            // lintervistato 
+            freqChartlintervistato: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_lintervistato|default_if_none:"0" }}, 20 - {{ freq_lintervistato|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: "L'intervistato",
+                centerText: {{ freq_lintervistato|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartlintervistato: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_lintervistato}} + 100) / 2, 100 - (({{growth_lintervistato}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: "L'intervistato",
+                centerText: '{{ growth_lintervistato|floatformat:0 }}%', 
+            },
+            // altri 
+            freqChartaltri: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_altri|default_if_none:"0" }}, 20 - {{ freq_altri|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_altri}}',
+                centerText: {{ freq_altri|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartaltri: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_altri}} + 100) / 2, 100 - (({{growth_altri}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_altri}}',
+                centerText: '{{ growth_altri|floatformat:0 }}%', 
+            },
+            
+
+        };
+  </script> 
+
+  <script src="{% static 'js/food/charts_barh.js' %}"></script>
+  <script src="{% static 'js/food/gauge_food_all.js' %}"></script>
+  <!-- <script src="{% static 'js/food/gauge_food_country.js' %}"></script> -->
+
+</body>
+</html>

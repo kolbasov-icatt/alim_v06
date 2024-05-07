@@ -1,0 +1,199 @@
+{% load static %}
+{% load custom_filters %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>{% block title %}{{ food }}{% endblock %}</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %} " />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body id="page-top">
+     <!-- NAVBAR -->
+    {% include 'dashboard/_navbar2.html' %}
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %} " />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <header class="masthead" style="--background-image: url('{{ food.image.url }}')">
+        <div class="container">
+            <div class="masthead-subheading">{{ food.title }}</div>
+            <!-- <div class="masthead-heading text-uppercase">{{ food.title }}</div> -->
+        </div>
+    </header>
+    <!-- TOTAL RESULTS HEADER -->
+    <section class="page-section" id="services">
+        <div class="container">
+            <canvas id="myChart"></canvas>
+            <!-- Country Buttons -->
+            <div>
+                <button id="toggleInitial">All</button>
+                {% for country in countries %}
+                    <button id="{{ country.title }}Chart">{{ country.title }}</button>
+                {% endfor %}
+            </div>
+            <!-- Gender Buttons -->
+            <div>
+                {% for gender in genders %}
+                    <button id="{{ gender.title }}Chart">{{ gender.title }}</button>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+     <!-- Total Results -->
+     <section class="page-section" id="services">
+        <div class="container">
+            <!-- <div class="text-center">
+                <h4 class="section-heading text-uppercase">Total Results</h4>
+                <h3 class="section-subheading text-muted">Frequenza: giorni/mese. Cambiamento: %(molto + and poco +) - %(molto - and poco -) </h3>
+            </div> -->
+            <div class="row text-center">
+                <div class="col-md-4"><canvas id="FreqChart"></canvas></div>
+                <div class="col-md-2"><canvas id="FreqGaugeChart"></canvas></div>
+
+                <!-- <div class="col-md-1">
+                    <h4 class="section-heading text-uppercase">Total</h4>
+                    <h3 class="section-subheading text-muted">Frequenza: giorni/mese. Cambiamento: %(molto + and poco +)
+                </div> -->
+                
+                <div class="col-md-4"><canvas id="CamChart"></canvas></div>
+                <div class="col-md-2"><canvas id="CamGaugeChart"></canvas></div>                
+            </div>
+        </div>
+    </section>
+    <!-- COUNTRIES -->
+    <section class="page-section bg-light" id="portfolio">
+        <div class="container">
+            <div class="row">
+                <!-- col1 -->
+                <div class="col-lg-5 col-sm-6 mb-4">
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <canvas id="FreqChartCountries"></canvas>
+                        </a>
+                    </div>
+                </div>
+                <!-- col 2 -->
+                <div class="col-lg-2 col-sm-6 mb-4">
+                    <div class="portfolio-item">
+                        <!-- <img class="img-fluid" src="" alt="Countries" /> -->
+                        <!-- <div class="portfolio-caption"></div> -->
+                        <div class="portfolio-caption"><h5>COUNTRIES</h5></div>
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal2">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <div class="portfolio-caption">
+                                    <img src="{% static 'assets/img/Flag-map_of_Italy.png' %} " alt="Italian map" width="60px">
+
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- col 3 -->
+                <div class="col-lg-5 col-sm-6 mb-4">
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <canvas id="CamChartCountries"></canvas>
+                        </a>
+                        <!-- <div class="portfolio-caption"></div> -->
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </section>  
+
+    <script>
+        const canvas = document.getElementById('myChart');
+        let myChart = new Chart(canvas.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: {{ labels|safe }},
+                datasets: []
+            },
+            options: {
+                indexAxis: 'y',
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+            }
+        });
+
+        // Initial data to be displayed when the page loads
+        const initialData = {
+            label: 'Initial Data',
+            data: {{ data_values|safe }},
+            backgroundColor: 'rgba(62, 188, 210, 0.5)',
+            borderColor: 'rgba(62, 188, 210, 1)',
+            borderWidth: 1
+        };
+
+        const datasets = {
+            'Initial Data': initialData,
+            {% for country in countries %}
+            '{{ country.title }}': {
+                label: '{{ country.title }}',
+                data: {{ country_values|get_item:country.title|safe }},
+                backgroundColor: '{{ country.color }}',
+                borderColor: '{{ country.border_color }}',
+                borderWidth: 1
+            },
+            {% endfor %}
+        };
+
+        // Function to toggle data for a specific dataset
+        function toggleData(datasetKey) {
+            const dataset = datasets[datasetKey];
+            const index = myChart.data.datasets.findIndex(ds => ds.label === dataset.label);
+            if (index > -1) {
+                myChart.data.datasets.splice(index, 1);
+            } else {
+                if (datasetKey !== 'Initial Data' && myChart.data.datasets.some(ds => ds.label === initialData.label)) {
+                    myChart.data.datasets.splice(myChart.data.datasets.indexOf(initialData), 1);
+                }
+                myChart.data.datasets.push(dataset);
+            }
+            myChart.update();
+        }
+
+        document.getElementById('toggleInitial').addEventListener('click', () => toggleData('Initial Data'));
+        //document.getElementById('ItaliaChart').addEventListener('click', () => toggleData('Italia'));
+        //document.getElementById('GermaniaChart').addEventListener('click', () => toggleData('Germania'));
+        {% for country in countries %}
+            document.getElementById('{{ country.title }}Chart').addEventListener('click', () => toggleData('{{ country.title }}'));
+        {% endfor %}
+
+        // Initialize the chart with initial data
+        toggleData('Initial Data');
+    </script>
+   
+
+</body>
+</html>

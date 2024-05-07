@@ -1,0 +1,913 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>{% block title %}{{ food }}{% endblock %}</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %} " />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body id="page-top">
+     <!-- NAVBAR -->
+    {% include 'dashboard/_navbar2.html' %}
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %} " />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <header class="masthead" style="--background-image: url('{{ food.image.url }}')">
+        <div class="container">
+            <!-- <div class="masthead-subheading">{{ food.title }}</div> -->
+            <!-- <div class="masthead-heading text-uppercase">{{ food.title }}</div> -->
+        </div>
+    </header>
+    <!-- TOTAL RESULTS HEADER -->
+    <section class="page-section" id="services">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">{{ food.title }}</h2>
+            </div>
+            <!-- <div class="row text-center">
+                <div class="col-md-6"><h4 class="section-heading text-uppercase">FREQUENZA</h4></div>
+                <div class="col-md-6"><h4 class="section-heading text-uppercase">TREND</h4></div>                          
+            </div> -->
+        </div>
+    </section>
+
+     <!-- Total Results -->
+     <section class="page-section" id="services">
+        <div class="container">
+            <!-- <div class="text-center">
+                <h4 class="section-heading text-uppercase">Total Results</h4>
+                <h3 class="section-subheading text-muted">Frequenza: giorni/mese. Cambiamento: %(molto + and poco +) - %(molto - and poco -) </h3>
+            </div> -->
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <canvas id="FreqChart" class="my-4"></canvas>
+                </div>
+                <div class="col-md-2">
+                    <canvas id="FreqGaugeChart" class="my-4"></canvas>
+                </div>
+
+                <!-- <div class="col-md-1">
+                    <h4 class="section-heading text-uppercase">Total</h4>
+                    <h3 class="section-subheading text-muted">Frequenza: giorni/mese. Cambiamento: %(molto + and poco +)
+                </div> -->
+                
+                <div class="col-md-4"><canvas id="CamChart" class="my-4"></canvas></div>
+                <div class="col-md-2"><canvas id="CamGaugeChart" class="my-4"></canvas></div>                
+            </div>
+        </div>
+    </section>
+    <!-- COUNTRIES -->
+    <section class="page-section bg-light" id="portfolio">
+        <div class="container">
+            <div class="row">
+                <div class="text-center"><h5>PAESI</h5></div>
+                <!-- col1 : class: col-md-4 col-sm-6 mb-4-->
+                <div class="col-md-6">
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <canvas id="FreqChartCountries" class="my-6"></canvas>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- col 2 -->
+                <div class="col-md-6">
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <canvas id="CamChartCountries" class="my-6"></canvas>
+                        </a>
+                        <!-- <div class="portfolio-caption"></div> -->
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </section>
+    <!-- GENERATIONS -->
+    <section class="page-section bg-white" id="portfolio">
+        <div class="container">
+            <div class="row">
+                <div class="text-center"><h5>GENERAZIONI</h5></div>
+                <!-- col1 -->
+                <div class="col-md-6">
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <canvas id="FreqChartGenerations" class="my-6"></canvas>
+                        </a>
+                        <!-- <div class="portfolio-caption"></div> -->
+                    </div>
+                </div>
+                
+                <!-- col 2 -->
+                <div class="col-md-6">
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <canvas id="CamChartGenerations" class="my-6"></canvas>
+                        </a>
+                        <!-- <div class="portfolio-caption"></div> -->
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </section>
+    <!-- FOOD STYLES -->
+    <section class="page-section bg-light" id="portfolio">
+        <div class="container">
+            <div class="row">
+                <div class="text-center"><h5>STILI ALIMENTARI</h5></div> 
+                <!-- col1 -->
+                <div class="col-md-6">
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal4">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <canvas id="FreqChartStyles" class="my-6"></canvas>
+                        </a>
+                        <!-- <div class="portfolio-caption"></div> -->
+                    </div>
+                </div>
+              
+                <!-- col 2 -->
+                <div class="col-md-6">
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal4">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <canvas id="CamChartStyles" class="my-6"></canvas>
+                        </a>
+                        <!-- <div class="portfolio-caption"></div> -->
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </section>
+
+    <!-- POPUP -->
+    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-bs-dismiss="modal"><img src="{% static 'assets/img/close-icon.svg' %}" alt="Close modal" /></div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-4"><p>FREQUENZA (Media giorni/mese)</p></div>
+                        <div class="col-lg-4"></div>
+                        <div class="col-lg-4">TREND (Differenza tra % aumento e % diminuzione)</div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <!-- FREQUENCY COUNTRIES -->
+                        <div class="col-lg-2">
+                            <canvas id="ItaliaFreqGaugeChart"></canvas>
+                            <br>
+                            <br>
+                            <br>
+                            <canvas id="USAFreqGaugeChart"></canvas>                            
+                        </div>
+                        <div class="col-lg-2">
+                            <canvas id="FranciaFreqGaugeChart"></canvas>
+                            <br>
+                            <br>
+                            <br>
+                            <canvas id="GermaniaFreqGaugeChart"></canvas>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="modal-body">
+                                <!-- Project details-->
+                                <h2 class="text-uppercase">{{ foodcat.title }}</h2>
+                                <p class="item-intro text-muted">{{ foodcat.description }}</p>
+                                <img class="img-fixed" src="{{ food.image.url }}" alt="{{ food.title }}" width=400/>                                    
+                                <ul class="list-inline">
+                                        <li>
+                                            <h3>{{ food.title }}</h3>
+                                        </li>                                    
+                                </ul>
+                                <button class="btn btn-success btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                    <i class="fas fa-xmark me-1"></i>
+                                        Close
+                                </button>
+                            </div>
+                        </div>
+                        <!-- CAMBIAMENTO COUNTRIES -->
+                        <div class="col-lg-2">
+                            <canvas id="ItaliaCamGaugeChart"></canvas>
+                            <br>
+                            <br>
+                            <br>
+                            <canvas id="USACamGaugeChart"></canvas>
+                        </div>
+                        <div class="col-lg-2">
+                            <canvas id="FranciaCamGaugeChart"></canvas>
+                            <br>
+                            <br>
+                            <br>
+                            <canvas id="GermaniaCamGaugeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- POPUP ITALIAN REGIONS -->
+     <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-bs-dismiss="modal"><img src="{% static 'assets/img/close-icon.svg' %}" alt="Close modal" /></div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-4"><p>FREQUENZA (Media giorni/mese)</p></div>
+                        <div class="col-lg-4"></div>
+                        <div class="col-lg-4">TREND (Differenza tra % aumento e % diminuzione)</div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <!-- FREQUENCY COUNTRIES -->
+                        <div class="col-lg-2">
+                            <canvas id="NordOvestFreqGaugeChart"></canvas>
+                            <br>
+                            <br>
+                            <br>
+                            <canvas id="CentroFreqGaugeChart"></canvas>                            
+                        </div>
+                        <div class="col-lg-2">
+                            <canvas id="NordEstFreqGaugeChart"></canvas>
+                            <br>
+                            <br>
+                            <br>
+                            <canvas id="SudFreqGaugeChart"></canvas>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="modal-body">
+                                <!-- Project details-->
+                                <h2 class="text-uppercase">{{ foodcat.title }}</h2>
+                                <p class="item-intro text-muted">{{ foodcat.description }}</p>
+                                <img class="img-fixed" src="{{ food.image.url }}" alt="{{ food.title }}" width=400/>                                    
+                                <ul class="list-inline">
+                                        <li>
+                                            <h3>{{ food.title }}</h3>
+                                        </li>                                    
+                                </ul>
+                                <button class="btn btn-success btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                    <i class="fas fa-xmark me-1"></i>
+                                        Close
+                                </button>
+                            </div>
+                        </div>
+                        <!-- CAMBIAMENTO COUNTRIES -->
+                        <div class="col-lg-2">
+                            <canvas id="NordOvestCamGaugeChart"></canvas>
+                            <br>
+                            <br>
+                            <br>
+                            <canvas id="CentroCamGaugeChart"></canvas>
+                        </div>
+                        <div class="col-lg-2">
+                            <canvas id="NordEstCamGaugeChart"></canvas>
+                            <br>
+                            <br>
+                            <br>
+                            <canvas id="SudCamGaugeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- POPUP GENERATIONS -->
+    <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-bs-dismiss="modal"><img src="{% static 'assets/img/close-icon.svg' %}" alt="Close modal" /></div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-4"><p>FREQUENZA (Media giorni/mese)</p></div>
+                        <div class="col-lg-4"></div>
+                        <div class="col-lg-4">TREND (Differenza tra % aumento e % diminuzione)</div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <!-- FREQUENCY generations -->
+                        <div class="col-lg-2">
+                            
+                            <canvas id="genzFreqGaugeChart"></canvas>                            
+                            <br>
+                            <br>
+                            <br>
+                            <canvas id="genxFreqGaugeChart"></canvas>                            
+   
+                        </div>
+                        <div class="col-lg-2">
+                            <canvas id="genyFreqGaugeChart"></canvas>                            
+
+                            <br>
+                            <br>
+                            <br>
+                            <canvas id="boomerFreqGaugeChart"></canvas>                            
+
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="modal-body">
+                                <!-- Project details-->
+                                <h2 class="text-uppercase">{{ foodcat.title }}</h2>
+                                <p class="item-intro text-muted">{{ foodcat.description }}</p>
+                                <img class="img-fixed" src="{{ food.image.url }}" alt="{{ food.title }}" width=400/>                                    
+                                <ul class="list-inline">
+                                        <li>
+                                            <h3>{{ food.title }}</h3>
+                                        </li>                                    
+                                </ul>
+                                <button class="btn btn-success btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                    <i class="fas fa-xmark me-1"></i>
+                                        Close
+                                </button>
+                            </div>
+                        </div>
+                        <!-- CAMBIAMENTO generations -->
+                        <div class="col-lg-2">
+                            <canvas id="genzCamGaugeChart"></canvas>
+                            <br>
+                            <br>
+                            <br>
+                            <canvas id="genxCamGaugeChart"></canvas>
+                        </div>
+                        <div class="col-lg-2">
+                            <canvas id="genyCamGaugeChart"></canvas>
+                            <br>
+                            <br>
+                            <br>
+                            <canvas id="boomerCamGaugeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- POPUP foodstyles-->
+    <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-bs-dismiss="modal"><img src="{% static 'assets/img/close-icon.svg' %}" alt="Close modal" /></div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-4"><p>FREQUENZA (Media giorni/mese)</p></div>
+                        <div class="col-lg-4"></div>
+                        <div class="col-lg-4">TREND (Differenza tra % aumento e % diminuzione)</div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <!-- FREQUENCY foodstyles -->
+                        <div class="col-lg-2">                         
+                            <canvas id="territorialistiFreqGaugeChart"></canvas>
+                            <br>           
+                            <br>
+                            <br>
+                            <canvas id="industriarianiFreqGaugeChart"></canvas>
+                            <br>           
+                            <br>
+                            <br>
+                            <canvas id="esterofiliFreqGaugeChart"></canvas>
+                            <br>           
+                            <br>
+                            <br>
+                            <canvas id="essenzialistiFreqGaugeChart"></canvas>
+                        </div>
+                        <div class="col-lg-2">
+                            <canvas id="salutistiFreqGaugeChart"></canvas>
+                            <br>
+                            <br>
+                            <br>
+                            <canvas id="ristorianiFreqGaugeChart"></canvas>
+                            <br>           
+                            <br>
+                            <br>
+                            <canvas id="edonistiFreqGaugeChart"></canvas>
+                            <br>           
+                            <br>
+                            <br>
+                            <canvas id="nessunodiquestiFreqGaugeChart"></canvas>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="modal-body">
+                                <!-- Project details-->
+                                <h2 class="text-uppercase">{{ foodcat.title }}</h2>
+                                <p class="item-intro text-muted">{{ foodcat.description }}</p>
+                                <img class="img-fixed" src="{{ food.image.url }}" alt="{{ food.title }}" width=400/>                                    
+                                <ul class="list-inline">
+                                        <li>
+                                            <h3>{{ food.title }}</h3>
+                                        </li>                                    
+                                </ul>
+                                <button class="btn btn-success btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                    <i class="fas fa-xmark me-1"></i>
+                                        Close
+                                </button>
+                            </div>
+                        </div>
+                        <!-- cambiamento foodstyles -->
+                        <div class="col-lg-2">
+                            <canvas id="territorialistiCamGaugeChart"></canvas>
+                            <br>
+                            <br>
+                            <br>
+                            <canvas id="industriarianiCamGaugeChart"></canvas>
+                            <br>
+                            <br>
+                            <br>
+                            <canvas id="esterofiliCamGaugeChart"></canvas>
+                            <br>           
+                            <br>
+                            <br>
+                            <canvas id="essenzialistiCamGaugeChart"></canvas>
+                        </div>
+                        <div class="col-lg-2">
+                            <canvas id="salutistiCamGaugeChart"></canvas>
+                            <br>
+                            <br>
+                            <br>
+                            <canvas id="ristorianiCamGaugeChart"></canvas>
+                            <br>           
+                            <br>
+                            <br>
+                            <canvas id="edonistiCamGaugeChart"></canvas>
+                            <br>           
+                            <br>
+                            <br>
+                            <canvas id="nessunodiquestiCamGaugeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+   
+    <script>
+        // HORIZONTAL BARS
+        var chartConfigs = {
+            freqChart: {
+                labels: {{ freq_labels|safe }},
+                data: {{ freq_percentages|safe }},
+                backgroundColor: '{{ food.color }}',
+                borderColor: '{{ food.border_color }}',
+                title: "FREQUENZA",
+                },
+            camChart: {
+                labels: {{ growth_labels|safe }},
+                data: {{ growth_percentages|safe }},
+                backgroundColor: '{{ food.color2 }}',
+                borderColor: '{{ food.border_color2 }}',
+                title: 'TREND',
+                },
+            camChartCountries: {
+                labels: {{ labels_country|safe }},
+                data: {{ growth_country|safe }},
+                backgroundColor: {{ countries_color|safe }},
+                borderColor: {{ countries_border_color |safe }},
+                title: 'Differenza tra % aumento e % diminuzione',
+                },
+            camChartGenerations: {
+                labels: {{ labels_generation|safe }},
+                data: {{ growth_generation|safe }},
+                backgroundColor: '{{ food.color2 }}',
+                borderColor: '{{ food.border_color2 }}',
+                title: 'Differenza tra % aumento e % diminuzione',
+                },
+            camChartStyles: {
+                labels: {{ labels_styles|safe }},
+                data: {{ growth_styles|safe }},
+                backgroundColor: '{{ food.color2 }}',
+                borderColor: '{{ food.border_color2 }}',
+                title: 'Differenza tra % aumento e % diminuzione',
+                },
+        };
+
+        var chartConfigsGauge = {
+            freqChart: {
+                labels: ['{{food}}', ''],
+                data: [{{ freq_av }}, 20 - {{ freq_av }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: 'Media giorni/mese',
+                centerText: {{ freq_av|floatformat:1 }}, 
+            },
+            camChart: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_av}} + 100) / 2, 100 - (({{growth_av}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: 'Differenza tra % aumento e % diminuzione',
+                centerText: '{{ growth_av|floatformat:0 }}%', 
+            },
+            // ITALIA
+            freqChartItalia: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_italia|default_if_none:"0" }}, 20 - {{ freq_italia|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_italia}}',
+                centerText: {{ freq_italia|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartItalia: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_italia}} + 100) / 2, 100 - (({{growth_italia}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_italia}}',
+                centerText: '{{ growth_italia|floatformat:0 }}%', 
+            },
+            // USA
+            freqChartUSA: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_usa|default_if_none:"0" }}, 20 - {{ freq_usa|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_usa}}',
+                centerText: {{ freq_usa|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartUSA: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_usa}} + 100) / 2, 100 - (({{growth_usa}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_usa}}',
+                centerText: '{{ growth_usa|floatformat:0 }}%', 
+            },
+            // Francia
+            freqChartFrancia: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_francia|default_if_none:"0" }}, 20 - {{ freq_francia|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_francia}}',
+                centerText: {{ freq_francia|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartFrancia: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_francia}} + 100) / 2, 100 - (({{growth_francia}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_francia}}',
+                centerText: '{{ growth_francia|floatformat:0 }}%', 
+            },
+            // GERMANIA 
+            freqChartGermania: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_germania|default_if_none:"0" }}, 20 - {{ freq_germania|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_germania}}',
+                centerText: {{ freq_germania|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartGermania: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_germania}} + 100) / 2, 100 - (({{growth_germania}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_germania}}',
+                centerText: '{{ growth_germania|floatformat:0 }}%', 
+            },
+            // SUD 
+            freqChartSud: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_sudeisole|default_if_none:"0" }}, 20 - {{ freq_sudeisole|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_sudeisole}}',
+                centerText: {{ freq_sudeisole|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartSud: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_sudeisole}} + 100) / 2, 100 - (({{growth_sudeisole}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_sudeisole}}',
+                centerText: '{{ growth_sudeisole|floatformat:0 }}%', 
+            },
+            // NORD OVEST 
+            freqChartNordOvest: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_nordovest|default_if_none:"0" }}, 20 - {{ freq_nordovest|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_nordovest}}',
+                centerText: {{ freq_nordovest|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartNordOvest: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_nordovest}} + 100) / 2, 100 - (({{growth_nordovest}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_nordovest}}',
+                centerText: '{{ growth_nordovest|floatformat:0 }}%', 
+            },
+            // CENTRO 
+            freqChartCentro: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_centro|default_if_none:"0" }}, 20 - {{ freq_centro|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_centro}}',
+                centerText: {{ freq_centro|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartCentro: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_centro}} + 100) / 2, 100 - (({{growth_centro}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_centro}}',
+                centerText: '{{ growth_centro|floatformat:0 }}%', 
+            },
+            // NORD EST 
+            freqChartNordEst: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_nordest|default_if_none:"0" }}, 20 - {{ freq_nordest|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_nordest}}',
+                centerText: {{ freq_nordest|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartNordEst: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_nordest}} + 100) / 2, 100 - (({{growth_nordest}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_nordest}}',
+                centerText: '{{ growth_nordest|floatformat:0 }}%', 
+            },
+            // genx 
+            freqChartgenx: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_genx|default_if_none:"0" }}, 20 - {{ freq_genx|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_genx}}',
+                centerText: {{ freq_genx|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartgenx: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_genx}} + 100) / 2, 100 - (({{growth_genx}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_genx}}',
+                centerText: '{{ growth_genx|floatformat:0 }}%', 
+            },
+            // gen y 
+            freqChartgeny: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_geny|default_if_none:"0" }}, 20 - {{ freq_geny|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_geny}}',
+                centerText: {{ freq_geny|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartgeny: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_geny}} + 100) / 2, 100 - (({{growth_geny}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_geny}}',
+                centerText: '{{ growth_geny|floatformat:0 }}%', 
+            },
+            // genz 
+            freqChartgenz: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_genz|default_if_none:"0" }}, 20 - {{ freq_genz|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_genz}}',
+                centerText: {{ freq_genz|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartgenz: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_genz}} + 100) / 2, 100 - (({{growth_genz}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_genz}}',
+                centerText: '{{ growth_genz|floatformat:0 }}%', 
+            },
+            // boomer 
+            freqChartboomer: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_boomer|default_if_none:"0" }}, 20 - {{ freq_boomer|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_boomer}}',
+                centerText: {{ freq_boomer|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartboomer: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_boomer}} + 100) / 2, 100 - (({{growth_boomer}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_boomer}}',
+                centerText: '{{ growth_boomer|floatformat:0 }}%', 
+            },
+            // TERRITORIONALISTI 
+            freqChartterritorialisti: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_territorialisti|default_if_none:"0" }}, 20 - {{ freq_territorialisti|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_territorialisti}}',
+                centerText: {{ freq_territorialisti|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartterritorialisti: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_territorialisti}} + 100) / 2, 100 - (({{growth_territorialisti}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_territorialisti}}',
+                centerText: '{{ growth_territorialisti|floatformat:0 }}%', 
+            },
+            // RISTORANTI
+            freqChartristoriani: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_ristoriani|default_if_none:"0" }}, 20 - {{ freq_ristoriani|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_ristoriani}}',
+                centerText: {{ freq_ristoriani|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartristoriani: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_ristoriani}} + 100) / 2, 100 - (({{growth_ristoriani}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_ristoriani}}',
+                centerText: '{{ growth_ristoriani|floatformat:0 }}%', 
+            },
+            // salutisti 
+            freqChartsalutisti: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_salutisti|default_if_none:"0" }}, 20 - {{ freq_salutisti|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_salutisti}}',
+                centerText: {{ freq_salutisti|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartsalutisti: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_salutisti}} + 100) / 2, 100 - (({{growth_salutisti}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_salutisti}}',
+                centerText: '{{ growth_salutisti|floatformat:0 }}%', 
+            },
+            // industriariani 
+            freqChartindustriariani: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_industriariani|default_if_none:"0" }}, 20 - {{ freq_industriariani|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_industriariani}}',
+                centerText: {{ freq_industriariani|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartindustriariani: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_industriariani}} + 100) / 2, 100 - (({{growth_industriariani}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_industriariani}}',
+                centerText: '{{ growth_industriariani|floatformat:0 }}%', 
+            },
+            // nessuno di questi 
+            freqChartnessunodiquesti: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_nessunodiquesti|default_if_none:"0" }}, 20 - {{ freq_nessunodiquesti|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_nessunodiquesti}}',
+                centerText: {{ freq_nessunodiquesti|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartnessunodiquesti: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_nessunodiquesti}} + 100) / 2, 100 - (({{growth_nessunodiquesti}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_nessunodiquesti}}',
+                centerText: '{{ growth_nessunodiquesti|floatformat:0 }}%', 
+            },
+            // Esterofili 
+            freqChartesterofili: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_esterofili|default_if_none:"0" }}, 20 - {{ freq_esterofili|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_esterofili}}',
+                centerText: {{ freq_esterofili|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartesterofili: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_esterofili}} + 100) / 2, 100 - (({{growth_esterofili}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_esterofili}}',
+                centerText: '{{ growth_esterofili|floatformat:0 }}%', 
+            },
+            // Edonisti 
+            freqChartedonisti: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_edonisti|default_if_none:"0" }}, 20 - {{ freq_edonisti|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_edonisti}}',
+                centerText: {{ freq_edonisti|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartedonisti: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_edonisti}} + 100) / 2, 100 - (({{growth_edonisti}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_edonisti}}',
+                centerText: '{{ growth_edonisti|floatformat:0 }}%', 
+            },
+            // essenzialisti 
+            freqChartessenzialisti: {
+                labels: ['{{ food }}', ''],
+                data: [{{ freq_essenzialisti|default_if_none:"0" }}, 20 - {{ freq_essenzialisti|default_if_none:"0" }}],
+                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                title: '{{label_essenzialisti}}',
+                centerText: {{ freq_essenzialisti|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChartessenzialisti: {
+                labels: ['{{food}}', ''],
+                data: [ ({{growth_essenzialisti}} + 100) / 2, 100 - (({{growth_essenzialisti}} + 100) / 2) ],
+                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                title: '{{label_essenzialisti}}',
+                centerText: '{{ growth_essenzialisti|floatformat:0 }}%', 
+            },
+        }
+        // HISTORGRAMS
+        var chartConfigsBars = {
+            freqChartCountries: {
+                labels: {{ labels_country|safe }},
+                data: {{ freq_country|safe }},
+                //backgroundColor: '{{ food.color }}',
+                backgroundColor: {{ countries_color|safe }},
+                //borderColor: '{{ food.border_color }}',
+                borderColor: {{ countries_border_color |safe }},
+            },
+            freqChartGenerations: {
+                labels: {{ labels_generation|safe }},
+                data: {{ freq_generation|safe }},
+                backgroundColor: '{{ food.color }}',
+                borderColor: '{{ food.border_color }}',
+            },
+            freqChartStyles: {
+                labels: {{ labels_styles|safe }},
+                data: {{ freq_styles|safe }},
+                backgroundColor: '{{ food.color }}',                
+                borderColor: '{{ food.border_color }}',              
+            },
+
+        };
+        
+    </script>
+
+    <script src="{% static 'js/food/charts_barh.js' %}"></script>
+    <script src="{% static 'js/food/gauge_food_all.js' %}"></script>
+    <script src="{% static 'js/food/bars_food.js' %}"></script>
+
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="{% static 'js/scripts.js' %} "></script>
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <!-- * *                               SB Forms JS                               * *-->
+    <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+</body>
+</html>

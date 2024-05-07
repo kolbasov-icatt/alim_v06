@@ -1,0 +1,235 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{% block title %}{{ country }}. {{ generation }} {% endblock %}</title>
+  <!-- Favicon-->
+  <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %} " />
+  <!-- Font Awesome icons (free version)-->
+  <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+  <!-- Google fonts-->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+  <link href="{% static 'css/styles_country.css' %}" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Navigation-->
+  <nav class="navbar"></nav>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">
+      <a class="navbar-brand" href="{% url 'dashboard:homepage' %}"><img class="menu-flag" src="{% static 'assets/img/logo-yoodata.png' %} " alt="Yoodata" height="30px" /></a>
+    </div>    
+    <div class="country_info">
+
+        <img class="menu-flag" src="{{ country.image.url }}" alt="{{ country.title }}" height="40px" width="60px">
+      
+        <h1 class="country-name">{{ country }}. Generazione: {{ generation }}</h1>
+    </div>
+    <div class="menu">
+      <div class="menu-item"><a href="{% url 'dashboard:foodstyles' %}">FOOD STYLES</a></div>
+      <div class="menu-item"><a href="#products">PRODUCTS</a></div>
+      <div class="menu-item"><a href="{% url 'dashboard:homepage' %}#team">TEAM</a></div>
+      <div class="menu-item"><a href="{% url 'dashboard:homepage' %}#contact">CONTACT</a></div>
+    </div>
+  </header>
+
+  <section class="sidebar">
+    <div class="sidebar-item">Scegliere un paese</div>
+    {% for count in countries %}
+      {% if count.id != country.id %}
+      <div class="sidebar-item">
+        <a href="{% url 'dashboard:country_detail' count.id %}">
+          <img src="{{ count.image.url }}" alt="{{ count.title }}" height="35px">
+        </a>
+      </div>
+      {% endif %}
+    {% endfor %}
+    <hr>
+    <div class="sidebar-item">Scegliere un genere</div>
+    {% for gender in genders %}
+      {% if gender.title != "Altro" %}
+        <div class="sidebar-item">
+          <button class="stylish-button" style="background-color: {{ country.color }}">
+            <a href="{% url 'dashboard:country_gender_detail' id=country.id gender=gender %}">{{ gender }}</a>
+          </button>
+        </div>
+      {% endif %}
+    {% endfor %}
+    <hr>
+    <div class="sidebar-item">Scegliere un generazione</div>
+    {% for generation in generations %}
+      <div class="sidebar-item">
+        <button class="stylish-button" style="background-color: {{ country.color }}">
+          <a href="{% url 'dashboard:country_generation_detail' id=country.id generation=generation %}">{{ generation }}</a>
+        </button>
+      </div>
+    {% endfor %}
+    <hr>
+    <div class="sidebar-item">Scegliere un responsabile acquisti</div>
+    {% for resp in resps %}
+      <div class="sidebar-item">
+        <button class="stylish-button" style="background-color: {{ country.color }}">
+          <a href="{% url 'dashboard:country_resp_detail' id=country.id resp=resp %}">{{ resp }}</a>
+        </button>
+      </div>
+    {% endfor %}
+  </section>
+
+  <main class="main">
+    <div class="card_title1"><h2>Foodstyles</h2></div>
+    <div class="card_title2">
+      <div><h2>Products</h2></div>
+      <div><p>Top 5 products by frequency</p></div>
+    </div>
+    
+    <!-- MAIN CHART -->
+    <div class="card_styles">
+      <canvas id="myChart"></canvas>
+    </div>
+
+    <!-- DISTRIBUTIONS -->
+    <div class="card_reserve">
+      <div class="distributions_title"><h2>Distributions</h2></div>
+      <div class="distributions_charts1">
+        <canvas id="GenderChart"></canvas>
+        <canvas id="RespChart"></canvas>
+      </div>
+      <div class="distributions_charts2">
+        <canvas id="GenerationChart"></canvas>
+        {% if country.title == "Italia" %}
+        <canvas id="AreaChart"></canvas>
+        {% endif %}
+      </div>
+    
+    </div>
+
+    <div class="card_product1">
+      <div class="prod"><h3 class="product_name">{{ food1_label.short_name }}</h3></div>
+      <div class="prod_img">
+        <img class="product_image" src="{{ food1_label.image.url }}" alt="{{ food1_label.short_name }}" height="100vh">
+      </div>   
+      <canvas class="doughnut1" id="doughnutChart"></canvas>
+      <canvas class="doughnut2" id="doughnutChartCam"></canvas>
+    </div>
+
+    <div class="card_product2">
+      <div class="prod"><h3>{{ food2_label.short_name }}</h3></div>
+      <div class="prod_img">
+        <img class="product_image" src="{{ food2_label.image.url }}" alt="{{ food2_label.short_name }}" height="90vh">
+      </div> 
+      <canvas id="doughnutChart2"></canvas>
+      <canvas id="doughnutChartCam2"></canvas>
+    </div>      
+      
+    <div class="card_product3">
+      <div class="prod"><h3>{{ food3_label.short_name }}</h3></div>
+      <div class="prod_img">
+        <img class="product_image" src="{{ food3_label.image.url }}" alt="{{ food3_label.short_name }}" height="90vh">
+      </div> 
+      <canvas id="doughnutChart3"></canvas>
+      <canvas id="doughnutChartCam3"></canvas>
+    </div>
+      
+    <div class="card_product4">
+      <div class="prod"><h3>{{ food4_label.short_name }}</h3></div>
+      <div class="prod_img">
+        <img class="product_image" src="{{ food4_label.image.url }}" alt="{{ food4_label.short_name }}" height="90vh">
+      </div> 
+      <canvas id="doughnutChart4"></canvas>
+      <canvas id="doughnutChartCam4"></canvas>
+    </div>
+      
+    <div class="card_product5">
+      <div class="prod"><h3>{{ food5_label.short_name }}</h3></div>
+      <div class="prod_img">
+        <img class="product_image" src="{{ food5_label.image.url }}" alt="{{ food5_label.short_name }}" height="90vh">
+      </div> 
+      <canvas id="doughnutChart5"></canvas>
+      <canvas id="doughnutChartCam5"></canvas>
+    </div>
+  </main>
+
+  <!-- HORIZONTAL BAR CHART -->
+  <script>
+    var chartConfig = {
+        labels: {{ labels|safe }},
+        dataValues: {{ data_values|safe }},
+        backgroundColor: '{{ country.color }}',
+        borderColor: '{{ country.border_color }}',
+    };
+  </script>
+
+  <!-- HISTOGRAM GENDERS -->
+  <script>
+    var chartConfigs = {
+        genderChart: {
+            labels: {{ labels_gender|safe }},
+            data: {{ values_gender|safe }},
+            backgroundColor: '{{ country.color }}',
+            borderColor: '{{ country.border_color }}',
+        },
+        respChart: {
+            labels: {{ labels_resp|safe }},
+            data: {{ values_resp|safe }},
+            backgroundColor: '{{ country.color }}',
+            borderColor: '{{ country.border_color }}',
+        },
+        generationChart: {
+            labels: {{ labels_generations|safe }},
+            data: {{ values_generations|safe }},
+            backgroundColor: '{{ country.color }}',
+            borderColor: '{{ country.border_color }}',
+        }
+    };
+
+    {% if country.title == "Italia" %}
+        chartConfigs.areaChart = {
+            labels: {{ labels_area|safe }},
+            data: {{ values_area|safe }},
+            backgroundColor: '{{ country.color }}',
+            borderColor: '{{ country.border_color }}',
+        };
+    {% endif %}
+  </script>
+
+  <!-- GAUGE CHARTS -->
+  <script>
+    // Assuming these values are replaced by the server-side template engine
+    var food1_freq = {{ food1_freq }};
+    var food1_label = "{{ food1_label }}";
+    var food2_freq = {{ food2_freq }};
+    var food2_label = "{{ food2_label }}";
+    var food3_freq = {{ food3_freq }};
+    var food3_label = "{{ food3_label }}";
+    var food4_freq = {{ food4_freq }};
+    var food4_label = "{{ food4_label }}";
+    var food5_freq = {{ food5_freq }};
+    var food5_label = "{{ food5_label }}";
+
+    var country = {
+        color: "{{ country.color }}",
+        color_empty: "{{ country.color_empty }}",
+        border_color: "{{ country.border_color }}",
+        border_color_empty: "{{ country.border_color_empty }}",
+        color2: "{{ country.color2 }}",
+        color_empty2: "{{ country.color_empty2 }}",
+        border_color2: "{{ country.border_color2 }}",
+        border_color_empty2: "{{ country.border_color_empty2 }}"
+    };
+
+    // Additional necessary variables
+    var food1_cam = {{ food1_cam }};
+    var food2_cam = {{ food2_cam }};
+    var food3_cam = {{ food3_cam }};
+    var food4_cam = {{ food4_cam }};
+    var food5_cam = {{ food5_cam }};
+  </script>
+  
+  <script src="{% static 'js/charts_barh.js' %} "></script>
+  <script src="{% static 'js/charts_bar.js' %} "></script>
+  <script src="{% static 'js/charts_gauge.js' %} "></script>
+
+</body>
+</html>

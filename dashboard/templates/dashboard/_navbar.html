@@ -1,0 +1,18 @@
+{% load static %}
+
+<header class="header">
+    <div class="logo">
+        <a class="navbar-brand" href="{% url 'dashboard:homepage' %}"><img class="menu-flag" src="{% static 'assets/img/logo-yoodata.png' %} " alt="Yoodata" height="30px" /></a>
+    </div>    
+    <div class="country_info">
+        <img class="menu-flag" src="{{ navbar_image.url }}" alt="{{ navbar_title }}" height="40px" width="60px">
+        <h1 class="country-name">{{ navbar_title }}</h1>
+    </div>
+    <div class="menu">
+        <div class="menu-item"><a href="{% url 'dashboard:foodstyles' %}">STILI ALIMENTARI</a></div>
+        <div class="menu-item"><a href="{% url 'dashboard:homepage' %}#portfolio">PRODOTTI</a></div>
+        <div class="menu-item"><a href="{% url 'dashboard:homepage' %}#about">PAESI</a></div>
+        <div class="menu-item"><a href="{% url 'dashboard:homepage' %}#team">TEAM</a></div>
+        <div class="menu-item"><a href="{% url 'dashboard:homepage' %}#contact">LOG IN</a></div>
+    </div>
+</header>

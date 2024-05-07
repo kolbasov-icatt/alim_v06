@@ -1,0 +1,163 @@
+{% load custom_filters %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>{% block title %}{{ food }}{% endblock %}</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %} " />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body id="page-top">
+     <!-- NAVBAR -->
+    {% include 'dashboard/_navbar2.html' %}
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %} " />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    
+    <header class="masthead" style="--background-image: url('../assets/img/header-bg.jpg')">
+        <div class="container">
+            <div class="masthead-subheading">{{ food.title }}</div>
+            <!-- <div class="masthead-heading text-uppercase">{{ food.title }}</div> -->
+        </div>
+    </header>
+    <section class="page-section" id="services">
+        <div class="container">
+            <!-- FOOD STYLES PICTURES -->
+            <!-- <div class="row text-center">
+                {% for fs in foodstyles %}
+                    <div class="col-md-15">
+                        <img src="{{ fs.image.url }}" alt="{{ fs }}" width="140px">
+                        <p>{{ fs.title }}</p>
+                    </div>
+                {% endfor %}
+            </div> -->
+            <canvas id="myChart"></canvas>
+            <!-- Country Buttons -->
+            <div class="row text-center">
+                <h2 class="section-heading text-uppercase invisible">.</h2>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-3">
+                    <a id="toggleInitial" class="btn btn-success btn-xl text-uppercase">All</a>
+                </div>
+                {% for country in countries %}
+                    <div class="col-md-2">
+                        <!-- <a id="{{ country.title }}Chart" class="btn btn-success btn-xl text-uppercase">{{ country.title }}</a> -->
+                        <a id="{{ country.title }}Chart" class="btn">
+                            <img src="{{ country.image.url }}" alt="" height="60px">
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>           
+                <!-- Gender Buttons -->
+                <!-- <div>
+                    {% for gender in genders %}
+                        <button id="{{ gender.title }}Chart">{{ gender.title }}</button>
+                    {% endfor %}
+                </div> -->
+           
+        </div>
+    </section>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const canvas = document.getElementById('myChart');
+    let myChart = new Chart(canvas.getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: {{ labels|safe }},
+            datasets: []
+        },
+        options: {
+            indexAxis: 'y',
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        font: {
+                            size: 18 // Set the font size here
+                        }
+                    }                
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.dataset.label + ': ' + tooltipItem.raw.toFixed(0) + '%';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Initial data to be displayed when the page loads
+    const initialData = {
+        label: 'ALL',
+        data: {{ data_values|safe }},
+        backgroundColor: 'rgba(62, 188, 210, 0.5)',
+        borderColor: 'rgba(62, 188, 210, 1)',
+        borderWidth: 1
+    };
+
+    const datasets = {
+        'Initial Data': initialData,
+        {% for country in countries %}
+        '{{ country.title }}': {
+            label: '{{ country.title }}',
+            data: {{ country_values|get_item:country.title|safe }},
+            backgroundColor: '{{ country.color }}',
+            borderColor: '{{ country.border_color }}',
+            borderWidth: 1
+        },
+        {% endfor %}
+    };
+
+    // Function to toggle data for a specific dataset
+    function toggleData(datasetKey) {
+        const dataset = datasets[datasetKey];
+        const index = myChart.data.datasets.findIndex(ds => ds.label === dataset.label);
+        if (index > -1) {
+            myChart.data.datasets.splice(index, 1);
+        } else {
+            if (datasetKey !== 'Initial Data' && myChart.data.datasets.some(ds => ds.label === initialData.label)) {
+                myChart.data.datasets.splice(myChart.data.datasets.indexOf(initialData), 1);
+            }
+            myChart.data.datasets.push(dataset);
+        }
+        myChart.update();
+    }
+
+    document.getElementById('toggleInitial').addEventListener('click', () => toggleData('Initial Data'));
+    //document.getElementById('ItaliaChart').addEventListener('click', () => toggleData('Italia'));
+    //document.getElementById('GermaniaChart').addEventListener('click', () => toggleData('Germania'));
+    {% for country in countries %}
+        document.getElementById('{{ country.title }}Chart').addEventListener('click', () => toggleData('{{ country.title }}'));
+    {% endfor %}
+
+    // Initialize the chart with initial data
+    toggleData('Initial Data');
+</script>
+
+</body>
+</html>
