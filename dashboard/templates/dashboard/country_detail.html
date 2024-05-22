@@ -114,11 +114,11 @@
                             <div class="portfolio-hover">
                                 <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
-                            <img class="img-fluid" src="{{ food_label.image.url }}" alt="{{ food_label }}" />
+                            <img class="img-fluid {% if not food_label.is_visible %}dull{% endif %}" src="{{ food_label.image.url }}" alt="{{ food_label }}" />
                         </a>
                         <div class="portfolio-caption">
                             <div class="portfolio-item">
-                                <h5 class="text-center">{{ food_label }}</h5>
+                                <h5 class="text-center {% if not food_label.is_visible %}dull{% endif %}">{{ food_label }}</h5>
                             </div>   
                         </div>
                     </div>
@@ -142,10 +142,10 @@
                         <div class="row justify-content-center">
                             <div class="col-md-3">
                                 <div class="text-center">
-                                    <h5 class="text-center">{{ food_label }}</h5>
+                                    <h5 class="text-center {% if not food_label.is_visible %}dull{% endif %}">{{ food_label }}</h5>
                                     <p class="text-muted invisible">Description</p>
                                     <a href="{% url 'dashboard:food_detail' food_label.id %}">
-                                        <img class="img-fluid" src="{{ food_label.image.url }}" alt="{{ food_label }}" />
+                                        <img class="img-fluid {% if not food_label.is_visible %}dull{% endif %}" src="{{ food_label.image.url }}" alt="{{ food_label }}" />
                                     </a>
                                     <p class="text-muted invisible">Description</p>
                                 </div>                                
@@ -156,7 +156,9 @@
                                     <div class="title-container">
                                         <h5 class="text-center">{{ title_frequency }}</h5>
                                     </div>
-                                    <canvas id="{{ i }}FreqGaugeChart"></canvas> 
+                                    {% if food_label.is_visible %}
+                                    <canvas id="{{ i }}FreqGaugeChart"></canvas>
+                                    {% endif %} 
                                     <p class="text-muted invisible">Description</p>
                                 </div>
                             </div>

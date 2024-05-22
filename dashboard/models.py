@@ -72,6 +72,7 @@ class FoodStyle(models.Model):
     title = models.CharField(max_length=20)
     slug = models.SlugField(max_length=20)
     description = models.TextField(blank=True, null=True)
+    is_visible = models.BooleanField(default=False)
     order = models.IntegerField(blank=True, null=True)
     image = models.ImageField(upload_to='images/', blank=True, null=True)
     def __str__(self):
@@ -93,6 +94,10 @@ class Food(models.Model):
     description = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to='images/', blank=True, null=True)
     image_background = models.ImageField(upload_to='images/', blank=True, null=True)
+    
+    is_visible = models.BooleanField(default=False)
+    is_product = models.BooleanField(default=True)
+    # colors for charts
     color = models.CharField(max_length=25, default='rgba(0, 107, 162, 0.5)')
     border_color = models.CharField(max_length=25, default='rgba(0, 107, 162, 1)')
     color_empty = models.CharField(max_length=25, default='rgba(152, 218, 255, 0.1)')

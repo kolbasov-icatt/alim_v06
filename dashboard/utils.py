@@ -62,7 +62,7 @@ def context_country(country, respondents_query):
         percentages_area = [(item['count'] / total_count_area * 100) for item in area_counts]
 
     # FOOD
-    foods = Food.objects.all()
+    foods = Food.objects.filter(is_product=True)
     food_dictionary = {}
     for food in foods:
         result = respondents_query.filter(food=food
@@ -421,7 +421,7 @@ def context_foodstyle(foodstyle, respondents_query):
     print(percentages_area)
 
     # FOOD
-    foods = Food.objects.all()
+    foods = Food.objects.filter(is_product=True)
     food_dictionary = {}
     for food in foods:
         result = respondents_query.filter(food=food

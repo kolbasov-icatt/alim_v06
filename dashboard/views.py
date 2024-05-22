@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import FoodStyle, Country, Food, Gender, Generation, Area, RespAcq, Respondent, FoodCat
 from django.db.models import Count, Q, F, Case, When, Value, CharField, Avg
 from .utils import context_country, context_food, context_foodstyle
-
+from django.http import HttpResponseForbidden
 
 
 
@@ -93,6 +93,9 @@ def food_detail_test(request, id):
 
 def food_detail(request, id):
     food = get_object_or_404(Food, id=id)
+    if not food.is_visible:
+        return HttpResponseForbidden("Sorry, you do not have access to this page.")
+
     foods = Food.objects.all()
     respondents_query = Respondent.objects.filter(food=food)
     context = context_food(food, respondents_query)
@@ -102,6 +105,9 @@ def food_detail(request, id):
 
 def foodstyle_detail(request, id):
     foodstyle = get_object_or_404(FoodStyle, id=id)
+    if not foodstyle.is_visible:
+        return HttpResponseForbidden("Sorry, you do not have access to this page.")
+
     foodstyles = FoodStyle.objects.all()
     respondents_query = Respondent.objects.filter(foodstyle=foodstyle)
     context = context_foodstyle(foodstyle, respondents_query)

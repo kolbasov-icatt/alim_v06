@@ -65,15 +65,14 @@
                         <div class="col-md-3">
                             <a href="{% url 'dashboard:foodstyle_detail' foodstyle.id %}">
                                 <span class="fa-stack fa-4x">
-                                    <img class="img-fluid" src="{{ foodstyle.image.url }}" alt="{{ foodstyle.title }}" width=140 />
+                                    <img class="img-fluid {% if not foodstyle.is_visible %}dull{% endif %}" src="{{ foodstyle.image.url }}" alt="{{ foodstyle.title }}" width=140 />
                                 </span>
                             </a>    
-                                <h4 class="my-3">{{ foodstyle.title }}</h4>
+                            <h4 class="my-3 {% if not foodstyle.is_visible %}dull{% endif %}">{{ foodstyle.title }}</h4>
                                 <!-- <p class="text-muted invisible">{{ foodstyle.description }}</p> -->
                                 <p class="text-muted invisible">Description</p>
                         </div>
                     {% endfor %}
-                    
                 </div>
             </div>
         </section>
@@ -87,6 +86,7 @@
                 </div>
                 <div class="row">
                     {% for food in foods %}
+                    {% if food.is_product %}
                     <div class="col-lg-2 col-sm-6 mb-4">
                         <!-- Portfolio item 1-->
                         <div class="portfolio-item">
@@ -94,14 +94,15 @@
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
-                                <img class="img-fluid" src="{{ food.image.url }}" alt="{{ food.short_name }}" />
+                                <img class="img-fluid {% if not food.is_visible %}dull{% endif %}" src="{{ food.image.url }}" alt="{{ food.short_name }}" />
                             </a>
                             <div class="portfolio-caption">
-                                <p>{{ food.short_name }}</p> 
+                                <p class="{% if not food.is_visible %}dull{% endif %}">{{ food.short_name }}</p> 
                                 <!-- <div class="portfolio-caption-heading">{{ food.short_name }}</div> -->
                             </div>
                         </div>
                     </div>
+                    {% endif %}
                     {% endfor %}
                 </div>
             </div>
@@ -206,10 +207,10 @@
                                     <!-- Project details-->
                                     <h2 class="text-uppercase">{{ foodcat.title }}</h2>
                                     <p class="item-intro text-muted">{{ foodcat.description }}</p>
-                                    <img class="img-fixed" src="{{ food.image.url }}" alt="{{ food.title }}" width=400/>                                    
+                                    <img class="img-fixed {% if not food.is_visible %}dull{% endif %}" src="{{ food.image.url }}" alt="{{ food.title }}" width=400/>                                    
                                     <ul class="list-inline">
                                             <li>
-                                                <h4>{{ food.title }}</h4>
+                                                <h4 class="{% if not food.is_visible %}dull{% endif %}">{{ food.title }}</h4>
                                             </li>                                    
                                     </ul>
                                     <a href="{% url 'dashboard:food_detail' food.id %}">

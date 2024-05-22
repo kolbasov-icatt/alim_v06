@@ -7576,6 +7576,11 @@ textarea.form-control-lg {
   margin-left: auto !important;
 }
 
+.dull {
+  opacity: 0.5;
+  filter: grayscale(100%);
+}
+
 .title-container {
   min-height: 140px; /* Adjust this value as needed */
   display: flex;
