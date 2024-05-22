@@ -62,9 +62,11 @@ document.addEventListener("DOMContentLoaded", function() {
                     title: {display: true, text: config.title, 
                         padding: {bottom:-20, top: 10},
                         font: {
-                            size: 18,  // Sets the font size to 24 pixels
-                            style: 'bold',  // Optional: Makes the title bold
-                        }                   
+                            family: 'Roboto Slab',
+                            size: 18,  
+                            //style: 'bold',  
+                        },
+                        color: 'black',                   
                     },
                     tooltip: { enabled: false }
                 },

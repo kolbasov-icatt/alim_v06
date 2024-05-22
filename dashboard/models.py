@@ -15,6 +15,7 @@ class Country(models.Model):
     border_color2 = models.CharField(max_length=25, blank=True, null=True)
     color_empty2 = models.CharField(max_length=25, blank=True, null=True)
     border_color_empty2 = models.CharField(max_length=25, blank=True, null=True)
+    order = models.IntegerField(blank=True, null=True)
     def __str__(self):
         return self.title
     def get_absolute_url(self):
@@ -31,6 +32,7 @@ class Area(models.Model):
 class Gender(models.Model):
     title = models.CharField(max_length=20)
     slug = models.SlugField(max_length=20)
+    order = models.IntegerField(blank=True, null=True)
     def __str__(self):
         return self.title
 

@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    function createChart(chartId, config, title) {
+    function createChart(chartId, config) {
         const ctx = document.getElementById(chartId).getContext('2d');
         new Chart(ctx, {
             type: 'bar',
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 indexAxis: 'y',
                 plugins: {
                     legend: {display: false},
-                    title: {display: true, text: config.title},
+                    title: {display: false, text: config.title},
                     tooltip: {
                         callbacks: {
                             label: function(tooltipItem) {
@@ -27,20 +27,37 @@ document.addEventListener("DOMContentLoaded", function() {
                     }
                 },
                 scales: {
-                    y: { beginAtZero: true },
+                    y: { beginAtZero: true,
+                        ticks: {
+                            color: 'black',
+                            font: {
+                                family: 'Montserrat', 
+                                //weight: 'bold', 
+                                size: 16
+                            }
+                        }
+                    },
                     x: {
                         categoryPercentage: 1.0,
-                        barPercentage: 1
+                        barPercentage: 1,
+                        ticks: {
+                            color: 'black',
+                            font: {
+                                family: 'Montserrat', 
+                                //weight: 'bold', // Make y-axis labels bold
+                                size: 16
+                            }
+                        }
                     }
                 },
             }
         });
     }
 
-    createChart('FreqChart', chartConfigs.freqChart, '');
-    createChart('CamChart', chartConfigs.camChart, '');
-    createChart('CamChartCountries', chartConfigs.camChartCountries, '');
-    createChart('CamChartGenerations', chartConfigs.camChartGenerations, '');
-    createChart('CamChartStyles', chartConfigs.camChartStyles, '');
+    createChart('FreqChart', chartConfigs.freqChart);
+    createChart('CamChart', chartConfigs.camChart);
+    createChart('CamChartCountries', chartConfigs.camChartCountries);
+    createChart('CamChartGenerations', chartConfigs.camChartGenerations);
+    createChart('CamChartStyles', chartConfigs.camChartStyles);
 
 });

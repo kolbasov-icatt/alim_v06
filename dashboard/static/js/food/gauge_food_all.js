@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
             options: {
                 plugins: {
                     legend: {display: false},
-                    title: {display: true, text: config.title, 
+                    title: {display: false, text: config.title, 
                         padding: {bottom:-20, top: 10},
                         font: {
                             size: 18,  // Sets the font size to 24 pixels

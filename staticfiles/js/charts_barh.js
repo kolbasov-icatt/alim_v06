@@ -17,7 +17,23 @@ document.addEventListener("DOMContentLoaded", function() {
             indexAxis: 'y',
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    ticks: {
+                        font: {
+                            family: 'Montserrat', // Set font family to Montserrat
+                            weight: 'bold', // Make y-axis labels bold
+                            size: 16
+                        }
+                    }
+                },
+                x: {
+                    ticks: {
+                        font: {
+                            family: 'Montserrat', // Set font family to Montserrat
+                            weight: 'bold', // Make y-axis labels bold
+                            size: 16
+                        }
+                    }
                 }
             },
             plugins: {

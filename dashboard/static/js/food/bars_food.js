@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    function createChart(chartId, config, title) {
+    function createChart(chartId, config) {
         const ctx = document.getElementById(chartId).getContext('2d');
         new Chart(ctx, {
             type: 'bar',
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
             options: {
                 plugins: {
                     legend: {display: false},
-                    title: {display: true, text: title},
+                    title: {display: false, text: title},
                 },
                 scales: {
                     y: { beginAtZero: true },
@@ -29,9 +29,9 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    createChart('FreqChartCountries', chartConfigsBars.freqChartCountries, 'Media Giorni/mese');
-    createChart('FreqChartGenerations', chartConfigsBars.freqChartGenerations, 'Media Giorni/mese');
-    createChart('FreqChartStyles', chartConfigsBars.freqChartStyles, 'Media Giorni/mese');
+    createChart('FreqChartCountries', chartConfigsBars.freqChartCountries);
+    createChart('FreqChartGenerations', chartConfigsBars.freqChartGenerations);
+    createChart('FreqChartStyles', chartConfigsBars.freqChartStyles);
 
     
 });

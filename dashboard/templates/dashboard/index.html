@@ -63,12 +63,14 @@
                 <div class="row text-center">
                     {% for foodstyle in foodstyles %}
                         <div class="col-md-3">
-                            <span class="fa-stack fa-4x">
-                                <img class="img-fluid" src="{{ foodstyle.image.url }}" alt="{{ foodstyle.title }}" width=140 />
-                            </span>
-                            <h4 class="my-3">{{ foodstyle.title }}</h4>
-                            <!-- <p class="text-muted invisible">{{ foodstyle.description }}</p> -->
-                            <p class="text-muted invisible">Description</p>
+                            <a href="{% url 'dashboard:foodstyle_detail' foodstyle.id %}">
+                                <span class="fa-stack fa-4x">
+                                    <img class="img-fluid" src="{{ foodstyle.image.url }}" alt="{{ foodstyle.title }}" width=140 />
+                                </span>
+                            </a>    
+                                <h4 class="my-3">{{ foodstyle.title }}</h4>
+                                <!-- <p class="text-muted invisible">{{ foodstyle.description }}</p> -->
+                                <p class="text-muted invisible">Description</p>
                         </div>
                     {% endfor %}
                     

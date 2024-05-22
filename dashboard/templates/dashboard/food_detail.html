@@ -19,7 +19,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body id="page-top">
-     <!-- NAVBAR -->
+    <!-- NAVBAR -->
     {% include 'dashboard/_navbar2.html' %}
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %} " />
@@ -50,30 +50,45 @@
     </section>
 
      <!-- Total Results -->
-     <section class="page-section" id="services">
+     <!-- <canvas id="FreqGaugeChart"></canvas> -->
+     <!-- <canvas id="FreqChart"></canvas> -->
+     <!-- <canvas id="CamGaugeChart"></canvas> -->
+     <!-- <canvas id="CamChart"></canvas> -->
+
+
+     <section class="page-section bg-white" id="portfolio">
         <div class="container">
-            <!-- <div class="text-center">
-                <h4 class="section-heading text-uppercase">Total Results</h4>
-                <h3 class="section-subheading text-muted">Frequenza: giorni/mese. Cambiamento: %(molto + and poco +) - %(molto - and poco -) </h3>
-            </div> -->
-            <div class="row text-center">
-                <div class="col-md-4">
-                    <canvas id="FreqChart" class="my-4"></canvas>
-                </div>
-                <div class="col-md-2">
-                    <canvas id="FreqGaugeChart" class="my-4"></canvas>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal5">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <h5 class="text-center">Media frequenza di acquisto (giorni/mese)</h5>
+                            <canvas id="FreqChart" class="my-6"></canvas>
+                            <p class="text-muted invisible">Description</p>
+                        </a>
+                    </div>
                 </div>
 
-                <!-- <div class="col-md-1">
-                    <h4 class="section-heading text-uppercase">Total</h4>
-                    <h3 class="section-subheading text-muted">Frequenza: giorni/mese. Cambiamento: %(molto + and poco +)
-                </div> -->
-                
-                <div class="col-md-4"><canvas id="CamChart" class="my-4"></canvas></div>
-                <div class="col-md-2"><canvas id="CamGaugeChart" class="my-4"></canvas></div>                
+                <!-- col 2 -->
+                <div class="col-md-6">
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal5">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <h5 class="text-center">Trend (differenza tra % aumento e % diminuzione)</h5>
+                            <canvas id="CamChart" class="my-6"></canvas>
+                            <p class="text-muted invisible">Description</p>
+                        </a>
+                    </div>
+                </div>                
             </div>
         </div>
     </section>
+    
     <!-- COUNTRIES -->
     <section class="page-section bg-light" id="portfolio">
         <div class="container">
@@ -86,7 +101,9 @@
                             <div class="portfolio-hover">
                                 <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
+                            <p class="text-center">Giorni/mese</p>
                             <canvas id="FreqChartCountries" class="my-6"></canvas>
+                            <p class="text-muted invisible">Description</p>
                         </a>
                     </div>
                 </div>
@@ -98,7 +115,9 @@
                             <div class="portfolio-hover">
                                 <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
+                            <p class="text-center">Trend</p>
                             <canvas id="CamChartCountries" class="my-6"></canvas>
+                            <p class="text-muted invisible">Description</p>
                         </a>
                         <!-- <div class="portfolio-caption"></div> -->
                     </div>
@@ -118,7 +137,9 @@
                             <div class="portfolio-hover">
                                 <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
+                            <p class="text-center">Giorni/mese</p>
                             <canvas id="FreqChartGenerations" class="my-6"></canvas>
+                            <p class="text-muted invisible">Description</p>
                         </a>
                         <!-- <div class="portfolio-caption"></div> -->
                     </div>
@@ -131,7 +152,9 @@
                             <div class="portfolio-hover">
                                 <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
+                            <p class="text-center">Trend</p>
                             <canvas id="CamChartGenerations" class="my-6"></canvas>
+                            <p class="text-muted invisible">Description</p>
                         </a>
                         <!-- <div class="portfolio-caption"></div> -->
                     </div>
@@ -140,11 +163,10 @@
         </div>
     </section>
     <!-- FOOD STYLES -->
-    <section class="page-section bg-light" id="portfolio">
+    <!-- <section class="page-section bg-light" id="portfolio">
         <div class="container">
             <div class="row">
                 <div class="text-center"><h5>STILI ALIMENTARI</h5></div> 
-                <!-- col1 -->
                 <div class="col-md-6">
                     <div class="portfolio-item">
                         <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal4">
@@ -153,11 +175,9 @@
                             </div>
                             <canvas id="FreqChartStyles" class="my-6"></canvas>
                         </a>
-                        <!-- <div class="portfolio-caption"></div> -->
                     </div>
                 </div>
               
-                <!-- col 2 -->
                 <div class="col-md-6">
                     <div class="portfolio-item">
                         <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal4">
@@ -166,74 +186,84 @@
                             </div>
                             <canvas id="CamChartStyles" class="my-6"></canvas>
                         </a>
-                        <!-- <div class="portfolio-caption"></div> -->
                     </div>
                 </div>                
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- POPUP -->
     <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="close-modal" data-bs-dismiss="modal"><img src="{% static 'assets/img/close-icon.svg' %}" alt="Close modal" /></div>
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-4"><p>FREQUENZA (Media giorni/mese)</p></div>
-                        <div class="col-lg-4"></div>
-                        <div class="col-lg-4">TREND (Differenza tra % aumento e % diminuzione)</div>
-                    </div>
-                    <div class="row justify-content-center">
-                        <!-- FREQUENCY COUNTRIES -->
-                        <div class="col-lg-2">
-                            <canvas id="ItaliaFreqGaugeChart"></canvas>
-                            <br>
-                            <br>
-                            <br>
-                            <canvas id="USAFreqGaugeChart"></canvas>                            
-                        </div>
-                        <div class="col-lg-2">
-                            <canvas id="FranciaFreqGaugeChart"></canvas>
-                            <br>
-                            <br>
-                            <br>
-                            <canvas id="GermaniaFreqGaugeChart"></canvas>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="modal-body">
-                                <!-- Project details-->
-                                <h2 class="text-uppercase">{{ foodcat.title }}</h2>
-                                <p class="item-intro text-muted">{{ foodcat.description }}</p>
-                                <img class="img-fixed" src="{{ food.image.url }}" alt="{{ food.title }}" width=400/>                                    
-                                <ul class="list-inline">
-                                        <li>
-                                            <h3>{{ food.title }}</h3>
-                                        </li>                                    
-                                </ul>
-                                <button class="btn btn-success btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                                    <i class="fas fa-xmark me-1"></i>
-                                        Close
-                                </button>
+                <section class="page-section bg-white" id="portfolio">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6">
+                                <h2 class="text-center">{{ food.short_name }}</h2>
+                                <p class="text-muted invisible">Description</p>
+
+                                <!-- <img class="img-fluid" src="{{ food.image.url }}" alt="{{ food_label }}" /> -->
                             </div>
                         </div>
-                        <!-- CAMBIAMENTO COUNTRIES -->
-                        <div class="col-lg-2">
-                            <canvas id="ItaliaCamGaugeChart"></canvas>
-                            <br>
-                            <br>
-                            <br>
-                            <canvas id="USACamGaugeChart"></canvas>
-                        </div>
-                        <div class="col-lg-2">
-                            <canvas id="FranciaCamGaugeChart"></canvas>
-                            <br>
-                            <br>
-                            <br>
-                            <canvas id="GermaniaCamGaugeChart"></canvas>
+                    </div>
+                </section>
+                <section class="page-section bg-light" id="portfolio">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <h5 class="text-center">Media frequenza di acquisto (giorni/mese)</h5>
+                            <div class="col-md-2">
+                                <canvas id="ItaliaFreqGaugeChart"></canvas>
+                                <p class="text-muted invisible">Description</p>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-2">
+                                <canvas id="USAFreqGaugeChart"></canvas>
+                                <p class="text-muted invisible">Description</p>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-2">
+                                <canvas id="FranciaFreqGaugeChart"></canvas>
+                                <p class="text-muted invisible">Description</p>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-2">
+                                <canvas id="GermaniaFreqGaugeChart"></canvas>
+                                <p class="text-muted invisible">Description</p>
+                            </div>
+                            <div class="col-md-1"></div>
                         </div>
                     </div>
-                </div>
+                </section>
+                <section class="page-section bg-white" id="portfolio">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <h5 class="text-center">Trend (differenza tra % aumento e % diminuzione)</h5>
+                            <div class="col-md-2">
+                                <canvas id="ItaliaCamGaugeChart"></canvas>
+                                <p class="text-muted invisible">Description</p>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-2">
+                                <canvas id="USACamGaugeChart"></canvas>
+                                <p class="text-muted invisible">Description</p>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-2">
+                                <canvas id="FranciaCamGaugeChart"></canvas>
+                                <p class="text-muted invisible">Description</p>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-2">
+                                <canvas id="GermaniaCamGaugeChart"></canvas>
+                                <p class="text-muted invisible">Description</p>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                    </div>
+                </section>
+
             </div>
         </div>
     </div>
@@ -244,6 +274,7 @@
             <div class="modal-content">
                 <div class="close-modal" data-bs-dismiss="modal"><img src="{% static 'assets/img/close-icon.svg' %}" alt="Close modal" /></div>
                 <div class="container">
+
                     <div class="row justify-content-center">
                         <div class="col-lg-4"><p>FREQUENZA (Media giorni/mese)</p></div>
                         <div class="col-lg-4"></div>
@@ -308,66 +339,72 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="close-modal" data-bs-dismiss="modal"><img src="{% static 'assets/img/close-icon.svg' %}" alt="Close modal" /></div>
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-4"><p>FREQUENZA (Media giorni/mese)</p></div>
-                        <div class="col-lg-4"></div>
-                        <div class="col-lg-4">TREND (Differenza tra % aumento e % diminuzione)</div>
-                    </div>
-                    <div class="row justify-content-center">
-                        <!-- FREQUENCY generations -->
-                        <div class="col-lg-2">
-                            
-                            <canvas id="genzFreqGaugeChart"></canvas>                            
-                            <br>
-                            <br>
-                            <br>
-                            <canvas id="genxFreqGaugeChart"></canvas>                            
-   
-                        </div>
-                        <div class="col-lg-2">
-                            <canvas id="genyFreqGaugeChart"></canvas>                            
-
-                            <br>
-                            <br>
-                            <br>
-                            <canvas id="boomerFreqGaugeChart"></canvas>                            
-
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="modal-body">
-                                <!-- Project details-->
-                                <h2 class="text-uppercase">{{ foodcat.title }}</h2>
-                                <p class="item-intro text-muted">{{ foodcat.description }}</p>
-                                <img class="img-fixed" src="{{ food.image.url }}" alt="{{ food.title }}" width=400/>                                    
-                                <ul class="list-inline">
-                                        <li>
-                                            <h3>{{ food.title }}</h3>
-                                        </li>                                    
-                                </ul>
-                                <button class="btn btn-success btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                                    <i class="fas fa-xmark me-1"></i>
-                                        Close
-                                </button>
+                <section class="page-section bg-white" id="portfolio">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6">
+                                <h2 class="text-center">{{ food.short_name }}</h2>
+                                <p class="text-muted invisible">Description</p>
+                                <!-- <img class="img-fluid" src="{{ food.image.url }}" alt="{{ food_label }}" /> -->
                             </div>
                         </div>
-                        <!-- CAMBIAMENTO generations -->
-                        <div class="col-lg-2">
-                            <canvas id="genzCamGaugeChart"></canvas>
-                            <br>
-                            <br>
-                            <br>
-                            <canvas id="genxCamGaugeChart"></canvas>
-                        </div>
-                        <div class="col-lg-2">
-                            <canvas id="genyCamGaugeChart"></canvas>
-                            <br>
-                            <br>
-                            <br>
-                            <canvas id="boomerCamGaugeChart"></canvas>
+                    </div>
+                </section>
+                <section class="page-section bg-light" id="portfolio">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <h5 class="text-center">Media frequenza di acquisto (giorni/mese)</h5>
+                            <div class="col-md-2">
+                                <canvas id="genzFreqGaugeChart"></canvas>
+                                <p class="text-muted invisible">Description</p>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-2">
+                                <canvas id="genxFreqGaugeChart"></canvas>
+                                <p class="text-muted invisible">Description</p>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-2">
+                                <canvas id="genyFreqGaugeChart"></canvas>
+                                <p class="text-muted invisible">Description</p>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-2">
+                                <canvas id="boomerFreqGaugeChart"></canvas>
+                                <p class="text-muted invisible">Description</p>
+                            </div>
+                            <div class="col-md-1"></div>
                         </div>
                     </div>
-                </div>
+                </section>
+                <section class="page-section bg-white" id="portfolio">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <h5 class="text-center">Trend (differenza tra % aumento e % diminuzione)</h5>
+                            <div class="col-md-2">
+                                <canvas id="genzCamGaugeChart"></canvas>
+                                <p class="text-muted invisible">Description</p>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-2">
+                                <canvas id="genxCamGaugeChart"></canvas>
+                                <p class="text-muted invisible">Description</p>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-2">
+                                <canvas id="genyCamGaugeChart"></canvas>
+                                <p class="text-muted invisible">Description</p>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-2">
+                                <canvas id="boomerCamGaugeChart"></canvas>
+                                <p class="text-muted invisible">Description</p>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                    </div>
+                </section>
+
             </div>
         </div>
     </div>
@@ -377,6 +414,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="close-modal" data-bs-dismiss="modal"><img src="{% static 'assets/img/close-icon.svg' %}" alt="Close modal" /></div>
+                
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-4"><p>FREQUENZA (Media giorni/mese)</p></div>
@@ -468,6 +506,53 @@
             </div>
         </div>
     </div>
+
+    <!-- POPUP totals -->
+    <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-bs-dismiss="modal"><img src="{% static 'assets/img/close-icon.svg' %}" alt="Close modal" /></div>
+                <section class="page-section bg-white" id="portfolio">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6">
+                                <h2 class="text-center">{{ food.short_name }}</h2>
+                                <p class="text-muted invisible">Description</p>
+                                <!-- <img class="img-fluid" src="{{ food.image.url }}" alt="{{ food_label }}" /> -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="title-container">
+                                <h5 class="text-center">Media frequenza di acquisto (giorni/mese)</h5>
+                            </div>
+                            <canvas id="FreqGaugeChart"></canvas>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-5">
+                            <div class="title-container">
+                                <h5 class="text-center">Trend (differenza tra % aumento e % diminuzione)</h5>
+                            </div>
+                            <canvas id="CamGaugeChart"></canvas>
+                        </div>      
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-2">
+                            <button class="btn btn-success btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                            <i class="fas fa-xmark me-1"></i>
+                                Close
+                            </button>
+                        </div>
+                        
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
     
 
    
@@ -477,37 +562,37 @@
             freqChart: {
                 labels: {{ freq_labels|safe }},
                 data: {{ freq_percentages|safe }},
-                backgroundColor: '{{ food.color }}',
-                borderColor: '{{ food.border_color }}',
-                title: "FREQUENZA",
+                backgroundColor: '{{ green }}',
+                borderColor: '{{ green }}',
+                //title: "FREQUENZA",
                 },
             camChart: {
                 labels: {{ growth_labels|safe }},
                 data: {{ growth_percentages|safe }},
-                backgroundColor: '{{ food.color2 }}',
-                borderColor: '{{ food.border_color2 }}',
-                title: 'TREND',
+                backgroundColor: '{{ cyan }}',
+                borderColor: '{{ cyan }}',
+                //title: 'TREND',
                 },
             camChartCountries: {
                 labels: {{ labels_country|safe }},
                 data: {{ growth_country|safe }},
                 backgroundColor: {{ countries_color|safe }},
                 borderColor: {{ countries_border_color |safe }},
-                title: 'Differenza tra % aumento e % diminuzione',
+                //title: 'Differenza tra % aumento e % diminuzione',
                 },
             camChartGenerations: {
                 labels: {{ labels_generation|safe }},
                 data: {{ growth_generation|safe }},
-                backgroundColor: '{{ food.color2 }}',
-                borderColor: '{{ food.border_color2 }}',
-                title: 'Differenza tra % aumento e % diminuzione',
+                backgroundColor: '{{ cyan }}',
+                borderColor: '{{ cyan }}',
+                //title: 'Differenza tra % aumento e % diminuzione',
                 },
             camChartStyles: {
                 labels: {{ labels_styles|safe }},
                 data: {{ growth_styles|safe }},
-                backgroundColor: '{{ food.color2 }}',
-                borderColor: '{{ food.border_color2 }}',
-                title: 'Differenza tra % aumento e % diminuzione',
+                backgroundColor: '{{ cyan }}',
+                borderColor: '{{ cyan }}',
+                //title: 'Differenza tra % aumento e % diminuzione',
                 },
         };
 
@@ -515,33 +600,34 @@
             freqChart: {
                 labels: ['{{food}}', ''],
                 data: [{{ freq_av }}, 20 - {{ freq_av }}],
-                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
-                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
-                title: 'Media giorni/mese',
+                backgroundColor: ['{{ green }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ green }}', '{{ food.border_color_empty }}'],
+                //title: 'Media giorni/mese',
                 centerText: {{ freq_av|floatformat:1 }}, 
             },
             camChart: {
                 labels: ['{{food}}', ''],
                 data: [ ({{growth_av}} + 100) / 2, 100 - (({{growth_av}} + 100) / 2) ],
-                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
-                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
-                title: 'Differenza tra % aumento e % diminuzione',
+                backgroundColor: ['{{ cyan }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ cyan }}', '{{ food.border_color_empty2 }}'],
+                //title: 'Differenza tra % aumento e % diminuzione',
                 centerText: '{{ growth_av|floatformat:0 }}%', 
             },
             // ITALIA
             freqChartItalia: {
                 labels: ['{{ food }}', ''],
                 data: [{{ freq_italia|default_if_none:"0" }}, 20 - {{ freq_italia|default_if_none:"0" }}],
-                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
-                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                backgroundColor: ['{{ green }}', '{{ food.color_empty }}'],
+                //backgroundColor: {{ countries_color|safe }},
+                borderColor: ['{{ green }}', '{{ food.border_color_empty }}'],
                 title: '{{label_italia}}',
                 centerText: {{ freq_italia|default_if_none:"0"|floatformat:1 }}, 
             },
             camChartItalia: {
                 labels: ['{{food}}', ''],
                 data: [ ({{growth_italia}} + 100) / 2, 100 - (({{growth_italia}} + 100) / 2) ],
-                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
-                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                backgroundColor: ['{{ cyan }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ cyan }}', '{{ food.border_color_empty2 }}'],
                 title: '{{label_italia}}',
                 centerText: '{{ growth_italia|floatformat:0 }}%', 
             },
@@ -549,16 +635,16 @@
             freqChartUSA: {
                 labels: ['{{ food }}', ''],
                 data: [{{ freq_usa|default_if_none:"0" }}, 20 - {{ freq_usa|default_if_none:"0" }}],
-                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
-                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                backgroundColor: ['{{ green }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ green }}', '{{ food.border_color_empty }}'],
                 title: '{{label_usa}}',
                 centerText: {{ freq_usa|default_if_none:"0"|floatformat:1 }}, 
             },
             camChartUSA: {
                 labels: ['{{food}}', ''],
                 data: [ ({{growth_usa}} + 100) / 2, 100 - (({{growth_usa}} + 100) / 2) ],
-                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
-                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                backgroundColor: ['{{ cyan }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ cyan }}', '{{ food.border_color_empty2 }}'],
                 title: '{{label_usa}}',
                 centerText: '{{ growth_usa|floatformat:0 }}%', 
             },
@@ -566,16 +652,16 @@
             freqChartFrancia: {
                 labels: ['{{ food }}', ''],
                 data: [{{ freq_francia|default_if_none:"0" }}, 20 - {{ freq_francia|default_if_none:"0" }}],
-                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
-                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                backgroundColor: ['{{ green }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ green }}', '{{ food.border_color_empty }}'],
                 title: '{{label_francia}}',
                 centerText: {{ freq_francia|default_if_none:"0"|floatformat:1 }}, 
             },
             camChartFrancia: {
                 labels: ['{{food}}', ''],
                 data: [ ({{growth_francia}} + 100) / 2, 100 - (({{growth_francia}} + 100) / 2) ],
-                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
-                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                backgroundColor: ['{{ cyan }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ cyan }}', '{{ food.border_color_empty2 }}'],
                 title: '{{label_francia}}',
                 centerText: '{{ growth_francia|floatformat:0 }}%', 
             },
@@ -583,16 +669,16 @@
             freqChartGermania: {
                 labels: ['{{ food }}', ''],
                 data: [{{ freq_germania|default_if_none:"0" }}, 20 - {{ freq_germania|default_if_none:"0" }}],
-                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
-                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                backgroundColor: ['{{ green }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ green }}', '{{ food.border_color_empty }}'],
                 title: '{{label_germania}}',
                 centerText: {{ freq_germania|default_if_none:"0"|floatformat:1 }}, 
             },
             camChartGermania: {
                 labels: ['{{food}}', ''],
                 data: [ ({{growth_germania}} + 100) / 2, 100 - (({{growth_germania}} + 100) / 2) ],
-                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
-                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                backgroundColor: ['{{ cyan }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ cyan }}', '{{ food.border_color_empty2 }}'],
                 title: '{{label_germania}}',
                 centerText: '{{ growth_germania|floatformat:0 }}%', 
             },
@@ -642,8 +728,8 @@
             camChartCentro: {
                 labels: ['{{food}}', ''],
                 data: [ ({{growth_centro}} + 100) / 2, 100 - (({{growth_centro}} + 100) / 2) ],
-                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
-                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                backgroundColor: ['{{ cyan }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ cyan }}', '{{ food.border_color_empty2 }}'],
                 title: '{{label_centro}}',
                 centerText: '{{ growth_centro|floatformat:0 }}%', 
             },
@@ -659,8 +745,8 @@
             camChartNordEst: {
                 labels: ['{{food}}', ''],
                 data: [ ({{growth_nordest}} + 100) / 2, 100 - (({{growth_nordest}} + 100) / 2) ],
-                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
-                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                backgroundColor: ['{{ cyan }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ cyan }}', '{{ food.border_color_empty2 }}'],
                 title: '{{label_nordest}}',
                 centerText: '{{ growth_nordest|floatformat:0 }}%', 
             },
@@ -668,16 +754,16 @@
             freqChartgenx: {
                 labels: ['{{ food }}', ''],
                 data: [{{ freq_genx|default_if_none:"0" }}, 20 - {{ freq_genx|default_if_none:"0" }}],
-                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
-                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                backgroundColor: ['{{ green }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ green }}', '{{ food.border_color_empty }}'],
                 title: '{{label_genx}}',
                 centerText: {{ freq_genx|default_if_none:"0"|floatformat:1 }}, 
             },
             camChartgenx: {
                 labels: ['{{food}}', ''],
                 data: [ ({{growth_genx}} + 100) / 2, 100 - (({{growth_genx}} + 100) / 2) ],
-                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
-                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                backgroundColor: ['{{ cyan }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ cyan }}', '{{ food.border_color_empty2 }}'],
                 title: '{{label_genx}}',
                 centerText: '{{ growth_genx|floatformat:0 }}%', 
             },
@@ -685,16 +771,16 @@
             freqChartgeny: {
                 labels: ['{{ food }}', ''],
                 data: [{{ freq_geny|default_if_none:"0" }}, 20 - {{ freq_geny|default_if_none:"0" }}],
-                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
-                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                backgroundColor: ['{{ green }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ green }}', '{{ food.border_color_empty }}'],
                 title: '{{label_geny}}',
                 centerText: {{ freq_geny|default_if_none:"0"|floatformat:1 }}, 
             },
             camChartgeny: {
                 labels: ['{{food}}', ''],
                 data: [ ({{growth_geny}} + 100) / 2, 100 - (({{growth_geny}} + 100) / 2) ],
-                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
-                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                backgroundColor: ['{{ cyan }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ cyan }}', '{{ food.border_color_empty2 }}'],
                 title: '{{label_geny}}',
                 centerText: '{{ growth_geny|floatformat:0 }}%', 
             },
@@ -702,16 +788,16 @@
             freqChartgenz: {
                 labels: ['{{ food }}', ''],
                 data: [{{ freq_genz|default_if_none:"0" }}, 20 - {{ freq_genz|default_if_none:"0" }}],
-                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
-                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                backgroundColor: ['{{ green }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ green }}', '{{ food.border_color_empty }}'],
                 title: '{{label_genz}}',
                 centerText: {{ freq_genz|default_if_none:"0"|floatformat:1 }}, 
             },
             camChartgenz: {
                 labels: ['{{food}}', ''],
                 data: [ ({{growth_genz}} + 100) / 2, 100 - (({{growth_genz}} + 100) / 2) ],
-                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
-                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                backgroundColor: ['{{ cyan }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ cyan }}', '{{ food.border_color_empty2 }}'],
                 title: '{{label_genz}}',
                 centerText: '{{ growth_genz|floatformat:0 }}%', 
             },
@@ -719,16 +805,16 @@
             freqChartboomer: {
                 labels: ['{{ food }}', ''],
                 data: [{{ freq_boomer|default_if_none:"0" }}, 20 - {{ freq_boomer|default_if_none:"0" }}],
-                backgroundColor: ['{{ food.color }}', '{{ food.color_empty }}'],
-                borderColor: ['{{ food.border_color }}', '{{ food.border_color_empty }}'],
+                backgroundColor: ['{{ green }}', '{{ food.color_empty }}'],
+                borderColor: ['{{ green }}', '{{ food.border_color_empty }}'],
                 title: '{{label_boomer}}',
                 centerText: {{ freq_boomer|default_if_none:"0"|floatformat:1 }}, 
             },
             camChartboomer: {
                 labels: ['{{food}}', ''],
                 data: [ ({{growth_boomer}} + 100) / 2, 100 - (({{growth_boomer}} + 100) / 2) ],
-                backgroundColor: ['{{ food.color2 }}', '{{ food.color_empty2 }}'],
-                borderColor: ['{{ food.border_color2 }}', '{{ food.border_color_empty2 }}'],
+                backgroundColor: ['{{ cyan }}', '{{ food.color_empty2 }}'],
+                borderColor: ['{{ cyan }}', '{{ food.border_color_empty2 }}'],
                 title: '{{label_boomer}}',
                 centerText: '{{ growth_boomer|floatformat:0 }}%', 
             },
@@ -882,14 +968,14 @@
             freqChartGenerations: {
                 labels: {{ labels_generation|safe }},
                 data: {{ freq_generation|safe }},
-                backgroundColor: '{{ food.color }}',
-                borderColor: '{{ food.border_color }}',
+                backgroundColor: '{{ green }}',
+                borderColor: '{{ green }}',
             },
             freqChartStyles: {
                 labels: {{ labels_styles|safe }},
                 data: {{ freq_styles|safe }},
-                backgroundColor: '{{ food.color }}',                
-                borderColor: '{{ food.border_color }}',              
+                backgroundColor: '{{ green }}',
+                borderColor: '{{ green }}',          
             },
 
         };

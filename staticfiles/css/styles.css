@@ -1110,6 +1110,11 @@ progress {
     flex: 0 0 auto;
     width: 16.66666667%;
   }
+
+  .col-md-25 {
+    flex: 0 0 auto;
+    width: 20%;
+  }
   
   .col-md-3 {
     flex: 0 0 auto;
@@ -7569,6 +7574,20 @@ textarea.form-control-lg {
 .mx-auto {
   margin-right: auto !important;
   margin-left: auto !important;
+}
+
+.title-container {
+  min-height: 140px; /* Adjust this value as needed */
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+}
+
+.title-container-centered-vert {
+  min-height: 140px; /* Adjust this value as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .my-0 {

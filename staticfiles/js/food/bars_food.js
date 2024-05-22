@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    function createChart(chartId, config, title) {
+    function createChart(chartId, config) {
         const ctx = document.getElementById(chartId).getContext('2d');
         new Chart(ctx, {
             type: 'bar',
@@ -16,22 +16,40 @@ document.addEventListener("DOMContentLoaded", function() {
             options: {
                 plugins: {
                     legend: {display: false},
-                    title: {display: true, text: title},
+                    title: {display: false, },
+                    
                 },
                 scales: {
-                    y: { beginAtZero: true },
+                    y: { beginAtZero: true,
+                        color: 'black',
+                        ticks: {
+                            font: {
+                                family: 'Montserrat', 
+                                //weight: 'bold', 
+                                size: 16
+                            }
+                        }
+                     },
                     x: {
+                        color: 'black',
                         categoryPercentage: 1.0,
-                        barPercentage: 1
+                        barPercentage: 1,
+                        ticks: {
+                            font: {
+                                family: 'Montserrat', 
+                                //weight: 'bold', 
+                                size: 16
+                            }
+                        }
                     }
                 },
             }
         });
     }
 
-    createChart('FreqChartCountries', chartConfigsBars.freqChartCountries, 'Media Giorni/mese');
-    createChart('FreqChartGenerations', chartConfigsBars.freqChartGenerations, 'Media Giorni/mese');
-    createChart('FreqChartStyles', chartConfigsBars.freqChartStyles, 'Media Giorni/mese');
+    createChart('FreqChartCountries', chartConfigsBars.freqChartCountries);
+    createChart('FreqChartGenerations', chartConfigsBars.freqChartGenerations);
+    createChart('FreqChartStyles', chartConfigsBars.freqChartStyles);
 
     
 });

@@ -1,0 +1,335 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>{% block title %}{{ country }}{% endblock %}</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %} " />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body id="page-top">
+    <!-- NAVBAR -->
+    {% include 'dashboard/_navbar2.html' %}
+    <header class="masthead" style="--background-image: url('../assets/img/header-bg.jpg')"></header>
+    
+    <!-- COUNTRY TITLE -->
+    <section class="page-section" id="services">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">{{ country.title }}</h2>
+            </div>           
+        </div>
+    </section>
+
+
+   
+
+    
+
+    <!-- STILI ALIMENTARI | FILTERS -->
+    <section class="page-section bg-light" id="portfolio">
+        <div class="container">
+            <div class="row">
+               
+                <!-- Filters -->
+                <div class="col-md-2">
+                        <div class="title-container-centered-vert">
+                            <img src="{{ country.image.url }}" alt="{{ country.title }}" height="100px">
+                        </div>
+                        <!-- <h5 class="text-center">Filters</h5> -->
+                        <!-- <p class="text-muted invisible">Description</p> -->
+                </div>      
+                 <!-- STILI ALIMENTARI  -->
+                <div class="col-md-8">
+                    <div class="portfolio-item">
+                        <h5 class="text-center">Stili alimentari</h5>
+                        <canvas id="StiliChart"></canvas>
+                        <!-- <p class="text-muted invisible">Description</p> -->
+                    </div>
+                </div>
+                
+                          
+            </div>
+        </div>
+    </section>
+
+    <!-- DISTRIBUTIONS -->
+    <section class="page-section bg-white" id="portfolio">
+        <div class="container">
+            <div class="row">
+                <!-- GENERATIONS -->
+                <div class="col-md-4">
+                    <div class="portfolio-item">
+                        <h5 class="text-center">Generazioni</h5>
+                        <canvas id="GenerationChart"></canvas> 
+                        <p class="text-muted invisible">Description</p>
+                    </div>                  
+                </div>
+                <!-- GENDERS -->
+                <div class="col-md-4">
+                    <div class="portfolio-item">
+                        <h5 class="text-center">Genere</h5>
+                        <canvas id="GenderChart"></canvas> 
+                        <p class="text-muted invisible">Description</p>
+                    </div>                  
+                </div>
+                <!-- AREAS -->
+                <div class="col-md-4">
+                    <div class="portfolio-item">
+                        {% if country.title == "Italia" %}
+                        <h5 class="text-center">Regioni</h5>
+                        <canvas id="AreaChart"></canvas>
+                        {% endif %}
+                        <p class="text-muted invisible">Description</p>
+                    </div>                  
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- TOP 5 PRODUCTS -->
+    <section class="page-section bg-light" id="portfolio">
+        <div class="container">
+            <div class="row">
+                <div class="text-center"><h5>Top 5 prodotti per frequenza di acquisto</h5></div>
+                <!-- columns -->
+                {% for i, food_label, food_freq, food_cam in food_item_list %}
+                <div class="col-md-25">
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal{{ i }}">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="{{ food_label.image.url }}" alt="{{ food_label }}" />
+                        </a>
+                        <div class="portfolio-caption">
+                            <div class="portfolio-item">
+                                <h5 class="text-center">{{ food_label }}</h5>
+                            </div>   
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- POPUP -->
+    {% for i, food_label, food_freq, food_cam in food_item_list %}
+        <div class="portfolio-modal modal fade" id="portfolioModal{{ i }}" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="{% static 'assets/img/close-icon.svg' %}" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="text-center">
+                            <h2 class="section-heading text-uppercase">{{ foodstyle.title }}</h2>
+                            <p class="text-muted invisible">Description</p>
+                        </div>     
+                        <div class="row justify-content-center">
+                            <div class="col-md-3">
+                                <div class="text-center">
+                                    <h5 class="text-center">{{ food_label }}</h5>
+                                    <p class="text-muted invisible">Description</p>
+                                    <a href="{% url 'dashboard:food_detail' food_label.id %}">
+                                        <img class="img-fluid" src="{{ food_label.image.url }}" alt="{{ food_label }}" />
+                                    </a>
+                                    <p class="text-muted invisible">Description</p>
+                                </div>                                
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-3">
+                                <div class="text-center">
+                                    <div class="title-container">
+                                        <h5 class="text-center">{{ title_frequency }}</h5>
+                                    </div>
+                                    <canvas id="{{ i }}FreqGaugeChart"></canvas> 
+                                    <p class="text-muted invisible">Description</p>
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-3">
+                                <div class="text-center">
+                                    <div class="title-container">
+                                        <h5 class="text-center">{{ title_cam }}</h5>  
+                                    </div>                                    
+                    
+                                    <canvas id="{{i}}CamGaugeChart"></canvas> 
+                                    <p class="text-muted invisible">Description</p>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-2">
+                                <button class="btn btn-success btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                <i class="fas fa-xmark me-1"></i>
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    
+    <!-- <script>
+        var chartConfig = {
+            labels: {{ labels|safe }},
+            dataValues: {{ data_values|safe }},
+            backgroundColor: '{{ country.color }}',
+            borderColor: '{{ country.border_color }}',
+        };
+    </script>
+     -->
+    <script>
+        var chartConfig = {
+            labels: {{ labels|safe }},
+            dataValues: {{ data_values|safe }},
+            backgroundColor: '{{ country.color }}',
+            borderColor: '{{ country.border_color }}',
+        };
+        
+        
+        var chartConfigs = {  
+            stiliChart: {
+                labels: {{ labels|safe }},
+                data: {{ data_values|safe }},
+                backgroundColor: '{{ country.color }}',
+                borderColor: '{{ country.border_color }}',
+            },
+            genderChart: {
+                labels: {{ labels_gender|safe }},
+                data: {{ values_gender|safe }},
+                backgroundColor: '{{ country.color }}',
+                borderColor: '{{ country.border_color }}',
+            },
+            generationChart: {
+                labels: {{ labels_generations|safe }},
+                data: {{ values_generations|safe }},
+                backgroundColor: '{{ country.color }}',
+                borderColor: '{{ country.border_color }}',
+            }
+        };
+
+        {% if country.title == "Italia" %}
+            chartConfigs.areaChart = {
+                labels: {{ labels_area|safe }},
+                data: {{ values_area|safe }},
+                backgroundColor: '{{ country.color }}',
+                borderColor: '{{ country.border_color }}',
+            };
+        {% endif %}
+
+        var chartConfigsGauge = {
+            // GAUGE CHARTS
+            freqChart1: { // 1
+                labels: ['{{ food1_label }}', ''],
+                data: [{{ food1_freq|default_if_none:"0" }}, 20 - {{ food1_freq|default_if_none:"0" }}],
+                backgroundColor: ['{{ country.color }}', '{{ country.color_empty }}'],
+                borderColor: ['{{ country.border_color }}', '{{ country.border_color }}'],
+                title: '{{food1_label}}',
+                centerText: {{ food1_freq|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChart1: {
+                labels: ['{{food1_label}}', ''],
+                data: [ ({{food1_cam}} + 100) / 2, 100 - (({{food1_cam}} + 100) / 2) ],
+                backgroundColor: ['{{ country.color2  }}', '{{ country.color_empty2 }}'],
+                borderColor: ['{{ country.border_color2 }}', '{{ country.border_color2 }}'],
+                title: '{{food1_label}}',
+                centerText: '{{ food1_cam|floatformat:0 }}%', 
+            },
+            freqChart2: { // 2
+                labels: ['{{ food2_label }}', ''],
+                data: [{{ food2_freq|default_if_none:"0" }}, 20 - {{ food2_freq|default_if_none:"0" }}],
+                backgroundColor: ['{{ country.color }}', '{{ country.color_empty }}'],
+                borderColor: ['{{ country.border_color }}', '{{ country.border_color }}'],
+                title: '{{food2_label}}',
+                centerText: {{ food2_freq|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChart2: {
+                labels: ['{{food2_label}}', ''],
+                data: [ ({{food2_cam}} + 100) / 2, 100 - (({{food2_cam}} + 100) / 2) ],
+                backgroundColor: ['{{ country.color2  }}', '{{ country.color_empty2 }}'],
+                borderColor: ['{{ country.border_color2 }}', '{{ country.border_color2 }}'],
+                title: '{{food2_label}}',
+                centerText: '{{ food2_cam|floatformat:0 }}%', 
+            },
+            freqChart3: { // 3
+                labels: ['{{ food3_label }}', ''],
+                data: [{{ food3_freq|default_if_none:"0" }}, 20 - {{ food3_freq|default_if_none:"0" }}],
+                backgroundColor: ['{{ country.color }}', '{{ country.color_empty }}'],
+                borderColor: ['{{ country.border_color }}', '{{ country.border_color }}'],
+                title: '{{food3_label}}',
+                centerText: {{ food3_freq|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChart3: {
+                labels: ['{{food3_label}}', ''],
+                data: [ ({{food3_cam}} + 100) / 2, 100 - (({{food3_cam}} + 100) / 2) ],
+                backgroundColor: ['{{ country.color2  }}', '{{ country.color_empty2 }}'],
+                borderColor: ['{{ country.border_color2 }}', '{{ country.border_color2 }}'],
+                title: '{{food3_label}}',
+                centerText: '{{ food3_cam|floatformat:0 }}%', 
+            },
+            freqChart4: { // 4
+                labels: ['{{ food4_label }}', ''],
+                data: [{{ food4_freq|default_if_none:"0" }}, 20 - {{ food4_freq|default_if_none:"0" }}],
+                backgroundColor: ['{{ country.color }}', '{{ country.color_empty }}'],
+                borderColor: ['{{ country.border_color }}', '{{ country.border_color }}'],
+                title: '{{food4_label}}',
+                centerText: {{ food4_freq|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChart4: {
+                labels: ['{{food4_label}}', ''],
+                data: [ ({{food4_cam}} + 100) / 2, 100 - (({{food4_cam}} + 100) / 2) ],
+                backgroundColor: ['{{ country.color2  }}', '{{ country.color_empty2 }}'],
+                borderColor: ['{{ country.border_color2 }}', '{{ country.border_color2 }}'],
+                title: '{{food4_label}}',
+                centerText: '{{ food4_cam|floatformat:0 }}%', 
+            },
+            freqChart5: { // 5
+                labels: ['{{ food5_label }}', ''],
+                data: [{{ food5_freq|default_if_none:"0" }}, 20 - {{ food5_freq|default_if_none:"0" }}],
+                backgroundColor: ['{{ country.color }}', '{{ country.color_empty }}'],
+                borderColor: ['{{ country.border_color }}', '{{ country.border_color }}'],
+                title: '{{food5_label}}',
+                centerText: {{ food5_freq|default_if_none:"0"|floatformat:1 }}, 
+            },
+            camChart5: {
+                labels: ['{{food5_label}}', ''],
+                data: [ ({{food5_cam}} + 100) / 2, 100 - (({{food5_cam}} + 100) / 2) ],
+                backgroundColor: ['{{ country.color2  }}', '{{ country.color_empty2 }}'],
+                borderColor: ['{{ country.border_color2 }}', '{{ country.border_color2 }}'],
+                title: '{{food5_label}}',
+                centerText: '{{ food5_cam|floatformat:0 }}%', 
+            },
+        }
+    </script>
+    <script src="{% static 'js/charts_barh.js' %} "></script>
+    <script src="{% static 'js/charts_bar.js' %} "></script>
+    <script src="{% static 'js/gauge_foodstyle.js' %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/scripts.js' %} "></script>
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+
+</body>
+</html>
+
+
+

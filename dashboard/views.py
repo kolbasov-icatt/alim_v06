@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from .models import FoodStyle, Country, Food, Gender, Generation, Area, RespAcq, Respondent, FoodCat
 from django.db.models import Count, Q, F, Case, When, Value, CharField, Avg
-from .utils import context_country, context_food
+from .utils import context_country, context_food, context_foodstyle
 
 
 
@@ -43,6 +43,14 @@ def test(request):
         'data_values': percentages,  # Note that we're passing percentages here
     }
     return render(request, 'dashboard/test.html', context)
+
+def country_detail_mobile(request, id):
+    country = get_object_or_404(Country, id=id)
+    respondents_query = Respondent.objects.filter(country=country)
+    context = context_country(country, respondents_query)
+
+    return render(request, 'dashboard/country_detail.html', context)
+
 
 
 def country_detail(request, id):
@@ -91,6 +99,15 @@ def food_detail(request, id):
     context['foods'] = foods
 
     return render(request, 'dashboard/food_detail.html', context)
+
+def foodstyle_detail(request, id):
+    foodstyle = get_object_or_404(FoodStyle, id=id)
+    foodstyles = FoodStyle.objects.all()
+    respondents_query = Respondent.objects.filter(foodstyle=foodstyle)
+    context = context_foodstyle(foodstyle, respondents_query)
+    #context['foodstyle'] = foodstyles
+
+    return render(request, 'dashboard/foodstyle_detail.html', context)
 
 def foodstyles(request):
     foodstyles = FoodStyle.objects.all().order_by('order')
