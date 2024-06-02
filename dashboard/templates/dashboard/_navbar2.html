@@ -12,8 +12,11 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'dashboard:foodstyles' %}">Stili alimentari</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'dashboard:homepage' %}#portfolio">Prodotti</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'dashboard:homepage' %}#about">Paesi</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'dashboard:homepage' %}#team">Team</a></li>
-                <li class="nav-item"><a class="nav-link" href="#contact">LOG IN</a></li>
+                <!-- <li class="nav-item"><a class="nav-link" href="{% url 'dashboard:homepage' %}#team">Team</a></li> -->
+                <li class="nav-item"><a class="nav-link" href="{% url 'dashboard:login' %}">LOG IN</a></li>
+                {% if user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'dashboard:logout' %}">LOG OUT</a></li>
+                {% endif %}
             </ul>
         </div>
     </div>

@@ -11,6 +11,8 @@ admin.site.register(Frequency)
 admin.site.register(GrowthRate)
 admin.site.register(FoodCat)
 admin.site.register(FoodStyle)
+admin.site.register(UserProfile)
+
 
 @admin.register(Respondent)
 class RespondentAdmin(admin.ModelAdmin):

@@ -1,8 +1,15 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import FoodStyle, Country, Food, Gender, Generation, Area, RespAcq, Respondent, FoodCat
 from django.db.models import Count, Q, F, Case, When, Value, CharField, Avg
 from .utils import context_country, context_food, context_foodstyle
 from django.http import HttpResponseForbidden
+
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from .forms import LoginForm
+from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+
 
 
 
@@ -12,11 +19,36 @@ def homepage(request):
     countries = Country.objects.all()
     foodcats = FoodCat.objects.all()
 
+    if request.user.is_authenticated:
+        profile = request.user.userprofile
+        foodstyles_visible = profile.visible_foodstyles.all()
+        foods_visible = profile.visible_foods.all()
+    else:
+        foodstyles_visible = [fs for fs in foodstyles if fs.is_visible]
+        foods_visible = [f for f in foods if f.is_visible]
+
+    foodstyles_visibility = []
+    for fs in foodstyles:
+        if fs in foodstyles_visible:
+            foodstyles_visibility.append((fs, True))
+        else:
+            foodstyles_visibility.append((fs, False))
+
+    foods_visibility = []
+    for f in foods:
+        if f in foods_visible:
+            foods_visibility.append((f, True))
+        else:
+            foods_visibility.append((f, False))
+
+
     context = {
         'foodstyles': foodstyles,
         'foodcats': foodcats,
         'foods': foods,
         'countries': countries,
+        'foodstyles_visibility': foodstyles_visibility,
+        'foods_visibility': foods_visibility,
     }
     return render(request, 'dashboard/index.html', context)
 
@@ -46,8 +78,20 @@ def test(request):
 
 def country_detail_mobile(request, id):
     country = get_object_or_404(Country, id=id)
+    foods = Food.objects.all()
+    
+    if request.user.is_authenticated:
+        profile = request.user.userprofile
+        foods_visible = profile.visible_foods.all()
+
+    else:
+        foods_visible = [f for f in foods if f.is_visible]
+
     respondents_query = Respondent.objects.filter(country=country)
     context = context_country(country, respondents_query)
+
+    for i, food_label, food_freq, food_cam  in context['food_item_list']:
+        context['food_item_list'][i-1].append(food_label in foods_visible)
 
     return render(request, 'dashboard/country_detail.html', context)
 
@@ -55,8 +99,21 @@ def country_detail_mobile(request, id):
 
 def country_detail(request, id):
     country = get_object_or_404(Country, id=id)
+
+    foods = Food.objects.all()
+    
+    if request.user.is_authenticated:
+        profile = request.user.userprofile
+        foods_visible = profile.visible_foods.all()
+
+    else:
+        foods_visible = [f for f in foods if f.is_visible]
+
     respondents_query = Respondent.objects.filter(country=country)
     context = context_country(country, respondents_query)
+
+    for i, food_label, food_freq, food_cam  in context['food_item_list']:
+        context['food_item_list'][i-1].append(food_label in foods_visible)
 
     return render(request, 'dashboard/detail.html', context)
 
@@ -93,8 +150,18 @@ def food_detail_test(request, id):
 
 def food_detail(request, id):
     food = get_object_or_404(Food, id=id)
-    if not food.is_visible:
-        return HttpResponseForbidden("Sorry, you do not have access to this page.")
+    foods = Food.objects.all()
+
+    if request.user.is_authenticated:
+        profile = request.user.userprofile
+        foods_visible = profile.visible_foods.all()
+    else:
+        foods_visible = [f for f in foods if f.is_visible]
+
+
+    if food not in foods_visible:
+        return custom_403_view(request)
+
 
     foods = Food.objects.all()
     respondents_query = Respondent.objects.filter(food=food)
@@ -105,13 +172,27 @@ def food_detail(request, id):
 
 def foodstyle_detail(request, id):
     foodstyle = get_object_or_404(FoodStyle, id=id)
-    if not foodstyle.is_visible:
-        return HttpResponseForbidden("Sorry, you do not have access to this page.")
-
     foodstyles = FoodStyle.objects.all()
+    foods = Food.objects.all()
+    
+    if request.user.is_authenticated:
+        profile = request.user.userprofile
+        foodstyles_visible = profile.visible_foodstyles.all()
+        foods_visible = profile.visible_foods.all()
+
+    else:
+        foodstyles_visible = [fs for fs in foodstyles if fs.is_visible]
+        foods_visible = [f for f in foods if f.is_visible]
+
+    if foodstyle not in foodstyles_visible:
+        return custom_403_view(request)
+
+
     respondents_query = Respondent.objects.filter(foodstyle=foodstyle)
     context = context_foodstyle(foodstyle, respondents_query)
-    #context['foodstyle'] = foodstyles
+
+    for i, food_label, food_freq, food_cam  in context['food_item_list']:
+        context['food_item_list'][i-1].append(food_label in foods_visible)
 
     return render(request, 'dashboard/foodstyle_detail.html', context)
 
@@ -151,3 +232,21 @@ def foodstyles(request):
         'country_values': country_values,
     }
     return render(request, 'dashboard/foodstyles.html', context)
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('dashboard:homepage')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'dashboard/login.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    return redirect('dashboard:homepage')
+
+def custom_403_view(request):
+    return render(request, 'dashboard/403_forbidden.html', status=403)

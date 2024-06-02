@@ -100,11 +100,11 @@ def context_country(country, respondents_query):
     food5_freq = sorted_foods[4][1][0]
     food5_cam =  sorted_foods[4][1][1]
 
-    food_item_list = [(1,food1_label,  food1_freq, food1_cam), 
-                      (2, food2_label, food2_freq, food2_cam), 
-                      (3, food3_label, food3_freq, food3_cam),
-                      (4, food4_label, food4_freq, food4_cam), 
-                      (5, food5_label, food5_freq, food5_cam)
+    food_item_list = [[1,food1_label,  food1_freq, food1_cam], 
+                      [2, food2_label, food2_freq, food2_cam], 
+                      [3, food3_label, food3_freq, food3_cam],
+                      [4, food4_label, food4_freq, food4_cam], 
+                      [5, food5_label, food5_freq, food5_cam]
                       ]
 
     title_frequency = 'Media frequenza di acquisto (giorni/mese)'
@@ -459,11 +459,11 @@ def context_foodstyle(foodstyle, respondents_query):
     food5_freq = sorted_foods[4][1][0]
     food5_cam =  sorted_foods[4][1][1]
 
-    food_item_list = [(1,food1_label,  food1_freq, food1_cam), 
-                      (2, food2_label, food2_freq, food2_cam), 
-                      (3, food3_label, food3_freq, food3_cam),
-                      (4, food4_label, food4_freq, food4_cam), 
-                      (5, food5_label, food5_freq, food5_cam)
+    food_item_list = [[1, food1_label, food1_freq, food1_cam], 
+                      [2, food2_label, food2_freq, food2_cam], 
+                      [3, food3_label, food3_freq, food3_cam],
+                      [4, food4_label, food4_freq, food4_cam], 
+                      [5, food5_label, food5_freq, food5_cam]
                       ]
     
 

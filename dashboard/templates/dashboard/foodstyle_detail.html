@@ -113,18 +113,18 @@
             <div class="row">
                 <div class="text-center"><h5>Top 5 prodotti per frequenza di acquisto</h5></div>
                 <!-- columns -->
-                {% for i, food_label, food_freq, food_cam in food_item_list %}
+                {% for i, food_label, food_freq, food_cam, is_visible in food_item_list %}
                 <div class="col-md-25">
                     <div class="portfolio-item">
                         <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal{{ i }}">
                             <div class="portfolio-hover">
                                 <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
-                            <img class="img-fluid {% if not food_label.is_visible %}dull{% endif %}" src="{{ food_label.image.url }}" alt="{{ food_label }}" />
+                            <img class="img-fluid {% if not is_visible %}dull{% endif %}" src="{{ food_label.image.url }}" alt="{{ food_label }}" />
                         </a>
                         <div class="portfolio-caption">
                             <div class="portfolio-item">
-                                <h5 class="text-center {% if not food_label.is_visible %}dull{% endif %}">{{ food_label }}</h5>
+                                <h5 class="text-center {% if not is_visible %}dull{% endif %}">{{ food_label }}</h5>
                             </div>   
                         </div>
                     </div>
@@ -135,7 +135,7 @@
     </section>
 
     <!-- POPUP -->
-    {% for i, food_label, food_freq, food_cam in food_item_list %}
+    {% for i, food_label, food_freq, food_cam, is_visible in food_item_list %}
         <div class="portfolio-modal modal fade" id="portfolioModal{{ i }}" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -148,10 +148,10 @@
                         <div class="row justify-content-center">
                             <div class="col-md-3">
                                 <div class="text-center">
-                                    <h5 class="text-center {% if not food_label.is_visible %}dull{% endif %}">{{ food_label }}</h5>
+                                    <h5 class="text-center {% if not is_visible %}dull{% endif %}">{{ food_label }}</h5>
                                     <p class="text-muted invisible">Description</p>
                                     <a href="{% url 'dashboard:food_detail' food_label.id %}">
-                                        <img class="img-fluid {% if not food_label.is_visible %}dull{% endif %}" src="{{ food_label.image.url }}" alt="{{ food_label }}" />
+                                        <img class="img-fluid {% if not is_visible %}dull{% endif %}" src="{{ food_label.image.url }}" alt="{{ food_label }}" />
                                     </a>
                                     <p class="text-muted invisible">Description</p>
                                 </div>  
@@ -162,7 +162,7 @@
                                     <div class="title-container">
                                         <h5 class="text-center">{{ title_frequency }}</h5>
                                     </div>
-                                    {% if food_label.is_visible %}
+                                    {% if is_visible %}
                                     <canvas id="{{ i }}FreqGaugeChart" class="my-6"></canvas> 
                                     {% endif %}
                                     <p class="text-muted invisible">Description</p>
