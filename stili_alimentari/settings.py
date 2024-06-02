@@ -28,6 +28,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://web-production-23864.up.railway.app'
+]
 
 # Application definition
 
@@ -112,6 +115,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
 
 LOGIN_URL = 'dashboard:login'
 LOGIN_REDIRECT_URL = 'dashboard:homepage'
